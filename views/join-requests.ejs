@@ -1,0 +1,70 @@
+<% for( let index = 0; index < requests.length; index++ ) { %>
+<div class="request">
+    <div class="worker-avatar">
+        <img
+            src="/<%=requests[index].requesterImage %>"
+            alt="user pic"
+            class="profile-photo"
+        />
+    </div>
+    <div
+        style="
+            width: 5rem;
+            padding-top: 0.5rem;
+            padding-left: 0.5rem;
+            overflow-y: scroll;
+        "
+    >
+        <%=requests[index].requesterName %>
+    </div>
+    <div
+        style="
+            overflow-y: scroll;
+            height: 4.5rem;
+            padding: 0.5rem;
+            width: 15rem;
+        "
+    >
+        <%=requests[index].project %>
+    </div>
+    <div
+        id="confirmBtn"
+        class="reqBtn"
+        hx-post="/users/profile/join-confirm/<%=requests[index].projectId%>/<%=requests[index].requesterId%>"
+        hx-trigger="click"
+        hx-swap="no-swap"
+    >
+        <i class="fa-regular fa-thumbs-up"></i>
+    </div>
+    <div
+        id="denyBtn"
+        class="reqBtn"
+        hx-delete="/users/profile/join-deny/<%=requests[index].projectId %>/<%=requests[index].requesterId%>"
+        hx-trigger="click"
+        hx-swap="no-swap"
+    >
+        <i class="fa-regular fa-thumbs-down"></i>
+    </div>
+</div>
+<% } %>
+<script>
+    (function () {
+        const reqButtons = document.querySelectorAll('.reqBtn');
+        const requests = document.querySelectorAll('.request');
+        const notSub = document.getElementById('not').childNodes[2];
+        let reqNum = requests.length;
+        reqButtons.forEach(el => {
+            el.addEventListener('click', e => {
+                const request = el.closest('.request');
+                --reqNum;
+                console.log(reqNum);
+                notSub.firstChild.textContent = `${reqNum}`;
+                request.remove();
+                if (reqNum === 0) {
+                    notSub.remove();
+                }
+            });
+        });
+        notSub.firstChild.textContent = `${reqNum}`;
+    })();
+</script>

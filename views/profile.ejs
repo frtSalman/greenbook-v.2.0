@@ -1,0 +1,294 @@
+<%- include('./includes/head') %>
+    <body>
+        <nav class="navbar">
+            <div class="Logo">Greenbook</div>
+            <ul class="Log">
+                <li id="not" style="padding-top: 0.5rem;cursor: pointer;"><i class="fa-solid fa-user-group"></i><% if (requests.length !== 0) { %>
+                     <sub style="position: relative;color: whitesmoke;top:5px;right:5px; background-color: red;padding: 5px;border-radius: 5px;"><b><%= requests.length %></b></sub>
+                <% } %></li>
+                <li style="padding-top: 0.5rem;">Selam! <%=user.name%></li>
+                <li>
+                    <form action="/logout" method="POST">
+                        <button type="submit" class="btn">Çıkış</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+        <main>
+            <div class="profile-con">
+                <div class="joinRequests" style="display: none;" hx-get="/users/profile/join_requests" hx-trigger="loadData" hx-swap="innerHTML">
+                </div>
+                <div class="overlay hidden"></div>
+                <div class="profile-update-modal hidden">
+                    <form
+                        id="updateUserForm"
+                        action="/users/<%= user.id %>/update"
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+                        <div class="updateSignin">
+                            <h1>Hesap Güncelleme Formu</h1>
+                            <p style="margin: 5px 0 10px 0">
+                                Lütfen hesap güncellemek için formu doldurun.
+                            </p>
+                            <label for="name"><b>İsim-Soyisim</b></label>
+                            <input
+                            type="text" placeholder="Ad Soyad Giriniz." name="name"
+                            value="<%=oldInput.name%>" id="name" required />
+
+                            <label for="name"><b>Görev Ünvanı</b></label>
+                            <input
+                            type="text" placeholder="Görev Ünvanı giriniz." name="workingTitle"
+                            value="<%=oldInput.workingTitle%>" id="workingTitle" required />
+
+                            <label for="email"><b>Email</b></label>
+                            <input type="text" placeholder="Enter Email"
+                            name="email" id="email" value="<%=oldInput.email%>" required />
+
+                            <label for="psw"><b>Password</b></label>
+                            <input type="password" placeholder="Enter Password"
+                            name="password" id="password" required />
+
+                            <label for="confirmpassword"><b>Repeat Password</b></label>
+                            <input type="password" placeholder="Repeat Password"
+                            name="confirmPassword" id="confirmPassword" required />
+
+                            <div style="display: flex; justify-content: space-between">
+                                <label for="profileImage">Profil Fotoğrafı:</label>
+                                <input
+                                    type="file"
+                                    name="updateProfilePic"
+                                    id="updateProfilePic"
+                                    style="width: 250px"
+                                />
+                            </div>
+
+                            <button type="submit" class="registerbtn">Güncelle</button>
+                        </div>
+                    </form>
+
+                </div>
+                <div id="top-profile">
+                    <div class="profile-pic">
+                        <img src="/<%= profilePic %>" alt="Profil Fotoğrafı" />
+                    </div>
+                    <div class="profile-entities">
+                        <table>
+                            <tr>
+                                <td class="profile-label"><label for="profile-name">Ad Soyad:</label></td>
+                                <td id="profile-name" class="profile-value"><%= user.name %></td>
+                            </tr>
+                            <tr>
+                                <td class="profile-label"><label for="profile-worktitle">Görev Ünvanı:</label></td>
+                                <td id="profile-worktitle" class="profile-value"><%= user.workingTitle %></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="updateBtn" class="linkbtn" >
+                        Güncelle
+                    </div>
+                </div>
+                <div id="profile-projects">
+                    <div id="all-projects">
+                        <div style="min-width: 8vw;">Tüm Projeler</div>
+                        <input type="text" id="allProjectsİnput" onkeyup="myFunctionAll()"  style="font-size: 1rem;" placeholder="Projelerde ara...">
+                        <div style="height:25vh;overflow: scroll;">
+                        <table id="allProjectsTable" >
+                        <tbody >
+                            <tr class="header">
+                                <th style="width:20%;">Yüklenici</th>
+                                <th style="width:50%;">İşin Adı</th>
+                                <th style="width:25%;">Üretici</th>
+                                <th style="width:5%;">İşlem</th>
+                            </tr>
+                            <% for( let index = 0; index < projects.length; index++ ) { %>
+                                <tr id="list">
+                                    <td><%=projects[index].projectInfos.projectDetails.projContractor%></td>
+                                    <td id="link" style="cursor: pointer;" hx-get="/projects/<%=projects[index].id%>" hx-trigger="click" hx-swap="none" ><%=projects[index].title%></td>
+                                    <td><%=projects[index].User.dataValues.name%></td>
+                                    <% if (projects[index].coworkers.includes(session.userId)) { %>
+                                        <td></td>    
+                                    <% } else if (projects[index].projectInfos.requestersIds?.includes(session.userId)){ %>
+                                        <td>Beklemede</td>
+                                    <% } else { %>
+                                        <td id="join" style="cursor: pointer;"  hx-post="/users/profile/join_request/<%=projects[index].id%>" hx-trigger="click" hx-target="" hx-swap="none">Katıl</td>
+                                    <% } %>
+                                </tr>
+                            <% } %>    
+                        </tbody>       
+                        </table>
+                        </div>
+                    </div>
+                    <div id="created-project">
+                        <div style="min-width: 8vw;">Üretilen Projeler</div>
+                        <input type="text" id="createdProjectsInput" onkeyup="myFunctionCreated()"  style="font-size: 1rem;" placeholder="Projelerde ara...">
+                        <div style="height:25vh;overflow: scroll;">
+                        <table id="createdProjectsTable" >
+                        <tbody >
+                            <tr class="header">
+                                <th style="width:20%;">Yüklenici</th>
+                                <th style="width:70%;">İşin Adı</th>
+                                <th style="width:10%;">İşlem</th>
+                            </tr>
+                            <% for( let index = 0; index < projects.length; index++ ) { %>
+                                <% if (projects[index].User.dataValues.name === session.name) { %>
+                                    <tr id="list">
+                                        <td><%=projects[index].projectInfos.projectDetails.projContractor%></td>
+                                        <td id="link" style="cursor: pointer;" hx-get="/projects/<%=projects[index].id%>" hx-trigger="click" hx-swap="none" ><%=projects[index].title%></td>
+                                        <td id="erase" style="cursor: pointer;"  hx-delete="/projects/<%=projects[index].id%>" hx-trigger="click" hx-swap="none">Sil</td>
+                                    </tr>
+                                <% } %>
+                            <% } %>    
+                        </tbody>       
+                        </table>
+                        </div>
+                    </div>
+                    <div id="joined-project">
+                        <div style="min-width: 8vw;">Katılınan Projeler</div>
+                        <input type="text" id="joinedProjectsInput" onkeyup="myFunctionJoined()" placeholder="Projelerde ara...">
+                        <div style="height:25vh;overflow: scroll;">
+                        <table id="joinedProjectsTable" >
+                        <tbody >
+                            <tr class="header">
+                                <th style="width:20%;">Yüklenici</th>
+                                <th style="width:70%;">İşin Adı</th>
+                                <th style="width:10%;">İşlem</th>
+                            </tr>
+                            <% for( let index = 0; index < projects.length; index++ ) { %>
+                                <% if (projects[index].coworkers.includes(session.userId) && projects[index].creatorId.name !== session.name) { %>
+                                    <tr id="list">
+                                        <td><%=projects[index].projectInfos.projectDetails.projContractor%></td>
+                                        <td id="link" style="cursor: pointer;" hx-get="/projects/<%=projects[index].id%>" hx-trigger="click" hx-swap="none" ><%=projects[index].title%></td>
+                                        <td id="dismiss" style="cursor: pointer;"  hx-post="/users/profile/dismiss/<%=projects[index].id%>" hx-trigger="click" hx-swap="none">Çık</td>
+                                    </tr>
+                                <% } %>
+                            <% } %>    
+                        </tbody>       
+                        </table>
+                        </div>
+                    </div>
+                </div>
+                <a href="/projects/create-projects" class="linkbtn">Proje Oluştur</a>
+            </div>
+        </main>
+        <script src="/js/updateProfileScript.js"></script>
+        <script>
+            document.querySelectorAll("#link").forEach((link)=>{
+                link.addEventListener('click',e=>{
+                    window.location.href = e.target.getAttribute('hx-get');
+                })
+            })
+
+            const joinButtons = document.querySelectorAll("#join");
+
+            joinButtons.forEach(element => {
+                element.addEventListener("click",() => {
+                setTimeout(() => {
+                    location.reload()
+                }, 1000);              
+            } )
+            });
+
+            const dismissButtons = document.querySelectorAll("#dismiss");
+
+            dismissButtons.forEach(element => {
+                element.addEventListener("click",() => {
+                console.log(element)    
+                setTimeout(() => {
+                    location.reload()
+                }, 1000);              
+            } )              
+            } );
+
+
+            const eraseButtons = document.querySelectorAll("#erase");
+
+            eraseButtons.forEach(element => {
+                element.addEventListener("click",() => {
+                setTimeout(() => {
+                    location.reload()
+                }, 1000);              
+            } )   
+            });
+
+            const not = document.getElementById("not")
+            const joinReqs = document.querySelector(".joinRequests")
+
+            let reqsOn = false
+
+            not.addEventListener("click",(e)=>{
+                console.log("bla")
+                joinReqs.dispatchEvent(new Event('loadData'));
+                const reqButtons = document.querySelectorAll('.reqBtn');
+                if(!reqsOn) {
+                    joinReqs.style.display = ""
+                    reqsOn = true
+                } else {
+                    joinReqs.style.display = "none"
+                    reqsOn = false
+                }
+            })
+
+
+            const myFunctionAll = () => {
+                let input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("allProjectsİnput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("allProjectsTable");
+                tr = table.getElementsByTagName("tr");
+
+                    for (i = 0; i < tr.length; i++) {
+                        td = tr[i].getElementsByTagName("td")[1];
+                        if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                        }
+                    }
+                }
+            
+            const myFunctionCreated = () => {
+                let input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("createdProjectsInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("createdProjectsTable");
+                tr = table.getElementsByTagName("tr");
+
+                    for (i = 0; i < tr.length; i++) {
+                        td = tr[i].getElementsByTagName("td")[1];
+                        if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                        }
+                    }
+                }
+                
+            const myFunctionJoined = () => {
+                let input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("joinedProjectsInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("joinedProjectsTable");
+                tr = table.getElementsByTagName("tr");
+
+                    for (i = 0; i < tr.length; i++) {
+                        td = tr[i].getElementsByTagName("td")[1];
+                        if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                        }
+                    }
+                }    
+        </script>
+    </body>
+</html>

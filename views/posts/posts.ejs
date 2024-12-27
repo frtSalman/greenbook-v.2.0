@@ -1,0 +1,108 @@
+<% for( let index = 0; index < posts.length; index++ ) { %>
+<div class="post">
+    <div class="evaluation">
+        <div class="date" style="float: right">
+            <%= posts[index].postDate %>
+        </div>
+        <div class="km">
+            <span>km:</span>
+            <span><%= posts[index].kmStart %></span>
+            <span>-</span>
+            <span><%= posts[index].kmEnd %></span>
+        </div>
+        <div class="title"><%= posts[index].title %></div>
+    </div>
+    <div style="display: flex">
+        <div
+            id="detailBtn"
+            class="linkbtn detail-for-modal"
+            hx-get="/posts/modal/<%= posts[index].id %>"
+            hx-target=".post-modal"
+            hx-trigger="click"
+            hx-swap="innerHTML"
+        >
+            <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+        </div>
+        <div
+            id="deleteBtn"
+            class="deletePostBtn"
+            hx-delete="/posts/<%= posts[index].id %>"
+            hx-trigger="click"
+            hx-swap="no-swap"
+        >
+            <i class="fa-solid fa-trash-can fa-lg"></i>
+        </div>
+        <div>
+            <a href="/posts/update/<%= posts[index].id %>"
+                ><div class="updatePostBtn">
+                    <i class="fa-solid fa-pen-to-square fa-lg"></i></div
+            ></a>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<div class="pagination">
+    <% if (currentPage > 1) { %>
+    <div
+        id="pagButton"
+        hx-get="/posts/<%= projectId %>/?page=<%= currentPage - 1 %>&limit=<%= limit %>"
+        hx-trigger="click"
+        hx-swap="innerHTML"
+        hx-target=".post-container"
+    >
+        <i class="fa-solid fa-caret-left"></i>
+    </div>
+    <% } %> <% const totalVisible = 5; const startPage = Math.max(1, currentPage
+    - Math.floor(totalVisible/ 2)); const endPage =
+    Math.min(totalPages,startPage + totalVisible - 1); if (startPage > 1) { %>
+    <div
+        id="pagButton"
+        hx-get="/posts/<%= projectId %>/?page=1&limit=<%= limit %>"
+        hx-trigger="click"
+        hx-swap="innerHTML"
+        hx-target=".post-container"
+    >
+        1
+    </div>
+    <% if (startPage > 2) { %>
+    <span>...</span>
+    <% } %> <% } %> <% for (let i = startPage; i <= endPage; i++) { %>
+    <div
+        class="<%= i === currentPage ? 'active' : '' %>"
+        id="pagButton"
+        hx-get="/posts/<%= projectId %>/?page=<%= i %>&limit=<%= limit %>"
+        hx-trigger="click"
+        hx-swap="innerHTML"
+        hx-target=".post-container"
+    >
+        <%= i %>
+    </div>
+    <% } %> <% if (endPage < totalPages) { %> <% if (endPage < totalPages - 1) {
+    %>
+    <span>...</span>
+    <% } %>
+    <div
+        id="pagButton"
+        hx-get="/posts/<%= projectId %>/?page=<%= totalPages %>&limit=<%= limit %>"
+        hx-trigger="click"
+        hx-swap="innerHTML"
+        hx-target=".post-container"
+    >
+        <%= totalPages %>
+    </div>
+    <% } %> <% if (currentPage < totalPages) { %>
+    <div
+        id="pagButton"
+        hx-get="/posts/<%= projectId %>/?page=<%= currentPage + 1 %>&limit=<%= limit %>"
+        hx-trigger="click"
+        hx-swap="innerHTML"
+        hx-target=".post-container"
+    >
+        <i class="fa-solid fa-caret-right"></i>
+    </div>
+    <% } %>
+</div>
+
+<script src="/js/postScript.js"></script>
+<script src="/js/postDelete.js"></script>

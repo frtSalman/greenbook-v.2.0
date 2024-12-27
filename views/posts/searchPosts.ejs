@@ -1,0 +1,26 @@
+<% for( let index = 0; index < posts.length; index++ ) { %>
+<div class="post">
+    <div class="evaluation">
+        <div class="date" style="float: right">
+            <%= posts[index].postDate %>
+        </div>
+        <div class="km">
+            <span>km:</span>
+            <span><%= posts[index].kmStart %></span>
+            <span>-</span>
+            <span><%= posts[index].kmEnd %></span>
+        </div>
+        <div class="title"><%= posts[index].title %></div>
+    </div>
+    <div
+        class="linkbtn detail-for-modal"
+        hx-get="/posts/modal/<%= posts[index].id %>"
+        hx-target=".post-modal"
+        hx-trigger="click"
+        hx-swap="innerHTML"
+    >
+        Detay
+    </div>
+</div>
+<% } %>
+<script src="/js/postScript.js"></script>

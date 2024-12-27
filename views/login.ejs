@@ -1,0 +1,35 @@
+<%- include('./includes/head') %>
+    <body>
+        <main>
+            <section id="loginbg">
+                <form action="/login" method="POST">
+                    <div class="login">
+                        <h1 style="margin-bottom: 5px;">Giriş</h1>
+                        <% if (errorMessage.length > 0) {%>
+                        <div class="user-message user-message--error">
+                            <%= errorMessage %>
+                        </div>
+                        <% } %>
+                        <label for="email"><b>Email</b></label>
+                        <input
+                        class="<%=validationErrors.find(e=>e.path==="email")?'inputError':''%>"
+                        type="text" placeholder="Enter Email" name="email"
+                        id="email" required value="<%=oldInput.email%>">
+                        <label for="password"><b>Password</b></label>
+                        <input
+                        class="<%=validationErrors.find(e=>e.path==="password")?'inputError':''%>"
+                        type="password" placeholder="Enter Password" name="password"
+                        value="<%=oldInput.password%>" id="password" required />
+                        <button type="submit" class="registerbtn">Log İn</button>
+                        <div class="signin-login">
+                                Hesabınız yok mu?<a href="/register"> Kayıt ol.</a>
+                        </div>
+                        <div class="signin-login">
+                            <a href="/forgetPassword">Şifremi unuttum.</a>
+                    </div>
+                    </div>
+                </form>                
+            </section>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,56 @@
+<div class="pic-modal">
+    <span class="close">&times;</span>
+    <img id="fullPostPic" />
+</div>
+<div class="post-modal-map" id="postModalMap">
+    <input type="hidden" name="geoData" value="<%=geoData%>" />
+    <input type="hidden" name="center" value="<%=center%>" />
+</div>
+<div class="post-modal-content">
+    <div class="post-modal-features">
+        <div class="evaluation">
+            <div class="date" style="float: right"><%= post.postDate %></div>
+            <div class="km">
+                <span>km:</span>
+                <span><%= post.kmStart %></span>
+                <span>-</span>
+                <span><%= post.kmEnd %></span>
+            </div>
+            <div class="title"><%= post.title %></div>
+            <div class="content">
+                <p style="text-align: justify"><%= post.content %></p>
+            </div>
+            <div class="userName" style="float: right">
+                <%= post.creatorName %>
+            </div>
+        </div>
+    </div>
+    <div class="post-modal-comments">
+        <div class="add-reply">Yorum ekle...</div>
+        <form
+            hx-post="/posts/add-reply/<%= post.id %>"
+            hx-target=".comment-pool"
+            hx-swap="innerHTML"
+            hx-trigger="load,submit"
+            style="display: flex; gap: 1rem; align-items: center"
+        >
+            <input
+                type="text"
+                name="reply"
+                style="padding: 5px; margin: 5px 0 5px"
+                placeholder="Yorum giriniz..."
+            />
+            <button type="submit" id="rplybtn" style="padding: 3px">
+                Ekle
+            </button>
+        </form>
+        <div class="comment-pool"></div>
+    </div>
+    <div class="post-modal-pics">
+        <% for( let index = 0; index < picArray.length; index++ ) { %>
+        <img id="postPic" src="/<%=picArray[index]%>" alt="Post Fotosu" />
+        <% } %>
+    </div>
+</div>
+<script src="/js/postModalMap.js"></script>
+<script src="/js/slideShow.js"></script>

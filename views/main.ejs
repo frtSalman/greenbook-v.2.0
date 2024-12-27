@@ -1,0 +1,714 @@
+<%- include('./includes/head') %>
+<body>
+    <nav class="navbar">
+        <div class="Logo">Greenbook</div>
+        <ul class="nav-links">
+            <a href="/projects/<%=project.id%>/project-detail">Proje Detay</a>
+        </ul>
+        <ul class="Log">
+            <li><a href="/users/profile"><%=username%></a></li>
+                <li>
+                    <form action="/logout" method="POST">
+                        <button type="submit" class="btn">Çıkış</button>
+                    </form>
+                </li>
+        </ul>
+    </nav>
+    <main>
+        <section class="project-features">
+            <div class="map-frame">
+                <div class="map <%=project.id%>" id="map">
+                    <div class="ol-control search-control">
+                        <input type="date" id="startDate" name="startDate" placeholder="Başlangıç Tarihi">
+                        <input type="date" id="endDate" name="endDate" placeholder="Bitiş Tarihi">
+                        <button id="daySearchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                    <div class="ol-control button eraseDraw">
+                        <button>
+                            <i class="fa-solid fa-eraser"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="features-con">
+                <button class="toggle-features" onclick="toggleFeatures()">Proje Bilgileri</button>
+                <div class="features" id="features">
+                    <div class="first-row">
+                        <div class="work">
+                            <div class="top-field-main">
+                                <label>Proje Bilgileri</label>
+                                <ol>
+                                    <li>
+                                        <div id="proInfoTitle" style="display: flex;flex-direction: column;">
+                                            <label for="proInfoTitle">Projenin Adı:</label>
+                                            <div style="padding-left: 8px;"><%= project.title %></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div style="display: flex;">
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">Projenin Uzunluğu:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projLength%></div>
+                                            </div>
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">Projenin Standartı:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projStandart%></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div style="display: flex;">
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">İhale Şekli:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projTenderLaw%></div>
+                                            </div>
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">İhale Tarihi:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projTenderDate%></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div style="display: flex;">
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">İhale Bedeli:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projTenderCost%></div>
+                                            </div>
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">Tenzilat:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projPriceCut%></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div style="display: flex;">
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">İlave İhale Bedeli %:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projETCPerc%></div>
+                                            </div>
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">İlave İhale Bedeli Tutarı:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projETCAmount%></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="proInfo" style="flex: 1;">
+                                            <label for="proInfo">Toplam İhale Bedeli:</label>
+                                            <div style="padding-left: 8px;"><%=features.projectDetails.projTTenderCost%></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div style="display: flex;">
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">İşin Başlama Tarihi:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projStartDate%></div>
+                                            </div>
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">İşin Bitiş Tarihi:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projEndDate%></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div style="display: flex;">
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">Verilen Ek Süre:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projExtraDay%></div>
+                                            </div>
+                                            <div id="proInfo" style="flex: 1;">
+                                                <label for="proInfo">İşin Bitiş Tarihi:</label>
+                                                <div style="padding-left: 8px;"><%=features.projectDetails.projEndExtra%></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                            <div class="bottomField-main">
+                                <ol start="9">
+                                    <li>
+                                        <div id="proInfo">
+                                            <label for="proInfo">Proje Tutarı:</label>
+                                            <div><%=features.projectDetails.projCost%></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="proInfo">
+                                            <label for="proInfo"><%=year-1%> Sonuna Kadar Yapılan Toplam Harcama:</label>
+                                            <div><%=features.projectDetails.projCostLY%></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="proInfo">
+                                            <label for="proInfo">Kalan İş Tutarı:</label>
+                                            <div><%=features.projectDetails.projCostRest%></div>
+                                        </div>     
+                                    </li>
+                                    <li>
+                                        <div id="proInfo">
+                                            <label for="proInfo"><%=year%> Yılı Program Ödeneği:</label>
+                                            <div><%=features.projectDetails.projAllowCurYear%></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="proInfo">
+                                            <label for="proInfo">Aktarmalar:</label>
+                                            <div><%=features.projectDetails.projTransfers%></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="proInfo">
+                                            <label for="proInfo">Revize Program Ödeneği:</label>
+                                            <div><%=features.projectDetails.projRevProgramAllow%></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="proInfo">
+                                            <label for="proInfo">Sözleşme Fiyatları İle Yapılan İş Tutarı:</label>
+                                            <div><%=features.projectDetails.projWorkAmConPrice%></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="proInfo">
+                                            <label for="proInfo"><%=year%> Yılı Harcama:</label>
+                                            <div><%=features.projectDetails.projSpenCurentYear%></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="proInfo">
+                                            <label for="proInfo">Başlangıçtan İtibaren Toplam Harcama:</label>
+                                            <div><%=features.projectDetails.projWholeSpend%></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="proInfo">
+                                            <label for="proInfo">Fiziki Gerçekleşme:</label>
+                                            <div><%=features.projectDetails.projRealization%></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="proInfo">
+                                            <label for="proInfo">İleriye Kalmış İş:</label>
+                                            <div><%=features.projectDetails.projWorkAhead%></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div id="proInfoContractor">
+                                            <label>Yüklenici:</label>
+                                            <div><%=features.projectDetails.projContractor%></div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="second-row">
+                        <div class="work">
+                            <label for="work">Toprak İşleri</label>
+                            <% if (features.earthWorks.excavations.amountAtCon) { %>
+                                <div class="inner-work" id="excavations">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Kazı</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.earthWorks.excavations.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.earthWorks.excavations.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="excgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.earthWorks.fillings.amountAtCon) { %>
+                                <div class="inner-work" id="fillings">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Dolgu</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.earthWorks.fillings.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.earthWorks.fillings.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="fillgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="work">
+                            <label for="work">Üstyapı İşleri</label>
+                            <% if (features.asphaltPavements.pmtPmat.amountAtCon) { %>
+                                <div class="inner-work" id="pmtPmat">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">PMT/PMAT</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.asphaltPavements.pmtPmat.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.asphaltPavements.pmtPmat.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="pmtgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.asphaltPavements.bsk.amountAtCon) { %>
+                                <div class="inner-work" id="bsk">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">BSK</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.asphaltPavements.bsk.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.asphaltPavements.bsk.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="bskgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.asphaltPavements.sk.amountAtCon) { %>
+                                <div class="inner-work" id="sk">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">SK</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.asphaltPavements.sk.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.asphaltPavements.sk.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="skgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="work">
+                            <label for="work">Sanat Yapısı İşleri</label>
+                            <% if (features.artStructures.cement.amountAtCon) { %>
+                                <div class="inner-work" id="cement">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Beton</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.artStructures.cement.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.artStructures.cement.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="cemgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.artStructures.rebar.amountAtCon) { %>
+                                <div class="inner-work" id="rebar">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Betonarme Demiri</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.artStructures.rebar.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.artStructures.rebar.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="rbrgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.artStructures.boredPile.amountAtCon) { %>
+                                <div class="inner-work" id="brdPile">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Fore Kazık</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.artStructures.boredPile.amountAtCon%></span>
+                                        <span>adet</span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.artStructures.boredPile.amountComp%></span>
+                                        <span>adet</span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="brdgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.artStructures.stoneWall.amountAtCon) { %>
+                                <div class="inner-work" id="stnWall">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Taş Duvar</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.artStructures.stoneWall.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.artStructures.stoneWall.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="stnWgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.artStructures.concrateWall.amountAtCon) { %>
+                                <div class="inner-work" id="concrateWall">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Beton Duvar</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.artStructures.concrateWall.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.artStructures.concrateWall.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="cWgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.artStructures.culvert.amountAtCon) { %>
+                                <div class="inner-work" id="culvert">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Menfez</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.artStructures.culvert.amountAtCon%></span>
+                                        <span>m</span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.artStructures.culvert.amountComp%></span>
+                                        <span>m</span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="culvertgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.artStructures.reinforcedEarth.amountAtCon) { %>
+                                <div class="inner-work" id="rEarth">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Toprakarme</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.artStructures.reinforcedEarth.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.artStructures.reinforcedEarth.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="rEgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.artStructures.tunnel.amountAtCon) { %>
+                                <div class="inner-work" id="tunnel">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Tünel</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.artStructures.tunnel.amountAtCon%></span>
+                                        <span>m</span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.artStructures.tunnel.amountComp%></span>
+                                        <span>m</span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="tgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.artStructures.bridge.amountAtCon) { %>
+                                <div class="inner-work" id="bridge">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Köprü</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.artStructures.bridge.amountAtCon%></span>
+                                        <span>m</span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.artStructures.bridge.amountComp%></span>
+                                        <span>m</span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="bgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="work">
+                            <label for="work">Çeşitli İşler</label>
+                            <% if (features.variousWorks.trafficSigns.amountAtCon) { %>
+                                <div class="inner-work" id="trafic">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Trafik İşaretleme İşleri:</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.variousWorks.trafficSigns.amountAtCon%></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.variousWorks.trafficSigns.amountComp%></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="trafficgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.variousWorks.landScape.amountAtCon) { %>
+                                <div class="inner-work" id="landScape">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Peyzaj İşleri:</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.variousWorks.landScape.amountAtCon%></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.variousWorks.landScape.amountComp%></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="landScapegraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.variousWorks.quardRail.amountAtCon) { %>
+                                <div class="inner-work" id="quardRail">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Oto Korkuluk İşleri:</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.variousWorks.quardRail.amountAtCon%></span>
+                                        <span>m</span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.variousWorks.quardRail.amountComp%></span>
+                                        <span>m</span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="quardRailgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.variousWorks.dren.amountAtCon) { %>
+                                <div class="inner-work" id="dren">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Drenaj İşleri:</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.variousWorks.dren.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.variousWorks.dren.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="drengraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.variousWorks.elec.amountAtCon) { %>
+                                <div class="inner-work" id="elec">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Elektrik İşleri:</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.variousWorks.elec.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.variousWorks.elec.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="elecgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.variousWorks.net.amountAtCon) { %>
+                                <div class="inner-work" id="net">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">İnternet İşleri:</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.variousWorks.net.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.variousWorks.net.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="netgraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if (features.variousWorks.sewer.amountAtCon) { %>
+                                <div class="inner-work" id="sewer">
+                                    <div class="inner-work-text">
+                                        <label for="inner-work">Kanalizasyon İşleri:</label>
+                                    <div class="sm">
+                                        <span>Sözleşme Miktarı:</span>
+                                        <span><%=features.variousWorks.sewer.amountAtCon%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    <div class="gm">
+                                        <span>Gerçekleşen Miktar:</span>
+                                        <span><%=features.variousWorks.sewer.amountComp%></span>
+                                        <span>m<sup>3</sup></span>
+                                    </div>
+                                    </div>
+                                    <div class="inner-work-graph">
+                                        <canvas id="sewergraph"></canvas>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="posts-coworkers">
+            <div class="coworkers-dateSearch">
+                <div class="coworkers-container">
+                    <button class="toggle-coworkers" onclick="toggleCoworkers()">Proje Çalışanları</button>
+                    <div class="coworkers" id="coworkers">
+                        <label for="coworkers" style="text-align: center;">Proje Çalışanları</label>
+                        <% for (let index = 0; index < coworkers.length; index++) { %>
+                            <div class="worker">
+                                <div class="worker-avatar">
+                                    <img src="/<%= coworkers[index].profileImage %>" alt="Profile Photo" class="profile-photo">        
+                                </div>
+                                <div class="worker-name" style="text-align: center;"><%= coworkers[index].name %></div>
+                                <% if (isUserAdmin && project.creatorId !== coworkers[index].id) { %>
+                                    <div class="worker-kick" hx-post="/projects/kick-cowoker/<%= project.id %>/<%= coworkers[index].id %>" hx-trigger="click" hx-swap="no-swap">
+                                        <i class="fa-solid fa-x"></i>
+                                    </div>
+                                <% } %>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="dateSearch">
+                    <div class="search">
+                        <label for="dateSearch" style="text-align: center;">Post Arama</label>
+                        <input type="date" id="searchDate" name="searchDate" placeholder="Post Tarihi" hx-get="/posts/<%= project.id %>/postSearch" hx-trigger="click from:#daySearchButton" hx-target=".dateSearchResults" hx-swap="innerHTML">
+                    <button id="daySearchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                    <div class="dateSearchResults"></div>
+                </div>
+            </div>
+            <div class="postsAndLink">
+                <div class="link" style="width: 175px;margin:auto;">
+                    <a href="/posts/create-post/<%= project.id %>"><div class="btn" id="create-post-button">Post Oluştur 👷‍♂️</div></a>
+                </div>
+                <div class="posts">  
+                    <div class="post-modal hidden"></div>
+                    <div class="overlay hidden"></div>
+                    <div class="post-container" hx-get="/posts/<%=project.id%>/?page=1&limit=6" hx-trigger="load once" hx-swap="innerHTML"></div>
+                </div>
+            </div>
+            <div class="blank"></div>
+        </section>
+        <footer>
+            <div>
+                <p class="copy-right">Fırat SALMAN &#169; <%= year %></p>
+            </div>
+        </footer>
+    </main>
+    <script>
+        const kicks = document.querySelectorAll(".worker-kick")
+        function kickWorker(event) {
+            setInterval(() => {
+                event.target.closest('.worker').remove()
+            }, 500);
+            
+        }
+        kicks.forEach(el=>{
+            el.addEventListener('click',kickWorker)
+        })
+        const coworkersDiv = document.getElementById('coworkers');
+
+        function toggleCoworkers() {
+            coworkersDiv.style.display = coworkersDiv.style.display === 'block' ? 'none' : 'block';
+        }
+
+        const featuresDiv = document.getElementById('features');
+
+        function toggleFeatures() {
+            featuresDiv.style.display = featuresDiv.style.display === 'block' ? 'none' : 'block';
+        }
+
+    </script>
+    <script src="/js/pie.js"></script>
+    <script src="/libs/v6.0.0-dist/ol.js"></script>
+    <script src="/js/mainMap.js"></script>
+</body>
+</html>

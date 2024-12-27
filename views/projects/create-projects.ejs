@@ -1,0 +1,1023 @@
+<%- include('../includes/head') %>
+    <body>
+        <nav class="navbar">
+            <div class="Logo">Greenbook</div>
+            <ul class="Log">
+                <li><a href="/users/profile"><%=username%></a></li>
+                <li>
+                    <form action="/logout" method="POST">
+                        <button type="submit" class="btn">Çıkış</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+        <main>
+            <div class="create-project-container">
+                <form
+                    action="/projects"
+                    method="POST"
+                    id="create-project-form"
+                    enctype="multipart/form-data"
+                >
+                <fieldset class="top-field">
+                    <legend>Proje Bilgileri</legend>
+                    <ol>
+                        <li>
+                            <div id="proInfoTitle">
+                                <label>Projenin Adı:</label>
+                                <input
+                                type="text"
+                                    name="projectTitle"
+                                    id="projectTitle"
+                                    placeholder="Projenin adını giriniz."
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <div style="display: flex;">
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">Projenin Uzunluğu:</label>
+                                    <input
+                                        type="text"
+                                        name="projectLength"
+                                        id="projectLength"
+                                        placeholder="... km"
+                                    />
+                                </div>
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">Projenin Standartı:</label>
+                                    <input
+                                        type="text"
+                                        name="projectStandart"
+                                        id="projectStandart"
+                                        placeholder="BY-BSK, TY-BSK, BY-SK, TY-SK"
+                                    />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="display: flex;">
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">İhale Şekli:</label>
+                                    <input
+                                        type="text"
+                                        name="tenderLaw"
+                                        id="tenderLaw"
+                                        placeholder="Kanun/Madde"
+                                    />
+                                </div>
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">İhale Tarihi:</label>
+                                    <input
+                                        type="text"
+                                        name="tenderDate"
+                                        id="tenderDate"
+                                        placeholder="../../...."
+                                    />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="display: flex;">
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">İhale Bedeli:</label>
+                                    <input
+                                        type="text"
+                                        name="tenderCost"
+                                        id="tenderCost"
+                                        placeholder="(S.B.F.)"
+                                    />
+                                </div>
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">Tenzilat:</label>
+                                    <input
+                                        type="text"
+                                        name="priceCut"
+                                        id="priceCut"
+                                        placeholder="%"
+                                    />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="display: flex;">
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">İlave İhale Bedeli %:</label>
+                                    <input
+                                        type="text"
+                                        name="extraTenderCostPerc"
+                                        id="extraTenderCostPerc"
+                                        placeholder="(S.B.F.)"
+                                    />
+                                </div>
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">İlave İhale Bedeli Tutarı:</label>
+                                    <input
+                                        type="text"
+                                        name="extraTenderCostAm"
+                                        id="extraTenderCostAm"
+                                        placeholder="TL"
+                                    />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="proInfo" style="flex: 1;">
+                                <label for="proInfo">Toplam İhale Bedeli:</label>
+                                <input
+                                    type="text"
+                                    name="totalTenderCost"
+                                    id="totalTenderCost"
+                                    placeholder="(S.B.F.)"
+                                />
+                            </div>
+                        </li>
+                        <li>
+                            <div style="display: flex;">
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">İşin Başlama Tarihi:</label>
+                                    <input
+                                        type="text"
+                                        name="projectStart"
+                                        id="projectStart"
+                                        placeholder="../../...."
+                                    />
+                                </div>
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">İşin Bitiş Tarihi:</label>
+                                    <input
+                                        type="text"
+                                        name="projectEnd"
+                                        id="projectEnd"
+                                        placeholder="../../...."
+                                    />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="display: flex;">
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">Verilen Ek Süre:</label>
+                                    <input
+                                        type="text"
+                                        name="projectExtraDay"
+                                        id="projectExtraDay"
+                                        placeholder="... gün"
+                                    />
+                                </div>
+                                <div id="proInfo" style="flex: 1;">
+                                    <label for="proInfo">İşin Bitiş Tarihi:</label>
+                                    <input
+                                        type="text"
+                                        name="projectEndExtra"
+                                        id="projectEndExtra"
+                                        placeholder="../../...."
+                                    />
+                                </div>
+                            </div>
+                        </li>
+                        <div class="bottomField">
+                            <li>
+                                <div id="proInfo">
+                                    <label for="proInfo">Proje Tutarı:</label>
+                                    <input
+                                        type="text"
+                                        name="projectCost"
+                                        id="projectCost"
+                                        placeholder="U.Y.F.`li tutarı giriniz."
+                                    />
+                                </div>
+                            </li>
+                            <li>
+                                <div id="proInfo">
+                                    <label for="proInfo"><%=year-1%> Sonuna Kadar Yapılan Toplam Harcama:</label>
+                                    <input
+                                        type="text"
+                                        name="projectCostLY"
+                                        id="projectCostLY"
+                                        placeholder="U.Y.F.`li tutarı giriniz."
+                                    />
+                                </div>
+                            </li>
+                            <li>
+                                <div id="proInfo">
+                                    <label for="proInfo">Kalan İş Tutarı:</label>
+                                    <input
+                                        type="text"
+                                        name="projectCostRest"
+                                        id="projectCostRest"
+                                        placeholder="(9-10)"
+                                    />
+                                </div>     
+                            </li>
+                            <li>
+                                <div id="proInfo">
+                                    <label for="proInfo"><%=year%> Yılı Program Ödeneği:</label>
+                                    <input
+                                        type="text"
+                                        name="allowCurrentYear"
+                                        id="allowCurrentYear"
+                                        placeholder=""
+                                    />
+                                </div>
+                            </li>
+                            <li>
+                                <div id="proInfo">
+                                    <label for="proInfo">Aktarmalar:</label>
+                                    <input
+                                        type="text"
+                                        name="projectTransfers"
+                                        id="projectTransfers"
+                                        placeholder="(Hedef Harcama/Eklenen)"
+                                    />
+                                </div>
+                            </li>
+                            <li>
+                                <div id="proInfo">
+                                    <label for="proInfo">Revize Program Ödeneği:</label>
+                                    <input
+                                        type="text"
+                                        name="revProgramAllow"
+                                        id="revProgramAllow"
+                                        placeholder="(12+13)"
+                                    />
+                                </div>
+                            </li>
+                            <li>
+                                <div id="proInfo">
+                                    <label for="proInfo">Sözleşme Fiyatları İle Yapılan İş Tutarı:</label>
+                                    <input
+                                        type="text"
+                                        name="workAmountConPrice"
+                                        id="workAmountConPrice"
+                                        placeholder="Tenzilatlı"
+                                    />
+                                </div>
+                            </li>
+                            <li>
+                                <div id="proInfo">
+                                    <label for="proInfo"><%=year%> Yılı Harcama:</label>
+                                    <input
+                                        type="text"
+                                        name="spendCurrentYear"
+                                        id="spendCurrentYear"
+                                        placeholder="U.Y.F."
+                                    />
+                                </div>
+                            </li>
+                            <li>
+                                <div id="proInfo">
+                                    <label for="proInfo">Başlangıçtan İtibaren Toplam Harcama:</label>
+                                    <input
+                                        type="text"
+                                        name="wholeSpend"
+                                        id="wholeSpend"
+                                        placeholder="U.Y.F. (10+16)"
+                                    />
+                                </div>
+                            </li>
+                            <li>
+                                <div id="proInfo">
+                                    <label for="proInfo">Fiziki Gerçekleşme:</label>
+                                    <input
+                                        type="text"
+                                        name="realization"
+                                        id="realization"
+                                        placeholder="%(15/6) veya (17/9)"
+                                    />
+                                </div>
+                            </li>
+                            <li>
+                                <div id="proInfo">
+                                    <label for="proInfo">İleriye Kalmış İş:</label>
+                                    <input
+                                        type="text"
+                                        name="workAhead"
+                                        id="workAhead"
+                                        placeholder="(9-17)"
+                                    />
+                                </div>
+                            </li>
+                            <li>
+                                <div id="proInfoContractor">
+                                    <label>Yüklenici:</label>
+                                    <textarea
+                                        type="text"
+                                        rows="3"
+                                        name="contractor"
+                                        id="contractor"
+                                        placeholder=""
+                                    ></textarea>
+                                </div>
+                            </li>
+                        </div>
+                    </ol>
+                </fieldset>
+                    <div class="fieldset-container">
+                        <fieldset id="excavotions-info">
+                            <legend>Toprak İşleri</legend>
+                            <div id="excavotions">
+                                <label for="excavotions">Kazı İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="extAmountCon"
+                                        id="amountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="extAmountComp"
+                                        id="amountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div id="fillworks">
+                                <label for="fillworks">Dolgu İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="fillAmountCon"
+                                        id="amountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="fillAmountComp"
+                                        id="amountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Üstyapı İşleri</legend>
+                            <div id="pmtPmat">
+                                <label for="pmtPmat">PMT / PMAT</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="pPAmountCon"
+                                        id="amountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="pPAmountComp"
+                                        id="amountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div id="bsk">
+                                <label for="bsk">BSK</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="bskAmountCon"
+                                        id="amountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="bskAmountComp"
+                                        id="amountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div id="sk">
+                                <label for="sk">SK</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="skAmountCon"
+                                        id="amountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="skAmountComp"
+                                        id="amountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Sanat Yapıları, Köprüler ve Tüneller</legend>
+                            <div id="cement">
+                                <label for="cement">Beton İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="cemAmountCon"
+                                        id="amountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="cemAmountComp"
+                                        id="amountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div id="rebar">
+                                <label for="rebar">Demir İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="rbrAmountCon"
+                                        id="amountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="rbrAmountComp"
+                                        id="amountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div id="boredPills">
+                                <label for="boredPills">Kazık İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="bPAmountCon"
+                                        id="amountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="bPAmountComp"
+                                        id="amountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div id="stoneWall">
+                                <label for="stoneWall">Taş Duvar İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="sWAmountCon"
+                                        id="sWamountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="sWAmountComp"
+                                        id="sWamountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div id="concrateWall">
+                                <label for="concrateWall">Beton Duvar İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="cWAmountCon"
+                                        id="cWAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="cWAmountComp"
+                                        id="cWAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div id="culvert">
+                                <label for="culvert">Menfez İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="cAmountCon"
+                                        id="cAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="cAmountComp"
+                                        id="cAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div id="reinforcedEarth">
+                                <label for="reinforcedEarth">Toprakarme İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="rEAmountCon"
+                                        id="rEAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="rEAmountComp"
+                                        id="rEAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div id="tunnel">
+                                <label for="tunnel">Tünel İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="tunnelAmountCon"
+                                        id="tunnelAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="tunnelAmountComp"
+                                        id="tunnelAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div id="bridge">
+                                <label for="bridge">Köprü İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="bAmountCon"
+                                        id="bAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="bAmountComp"
+                                        id="bAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Harita Bilgileri</legend>
+                            <div id="geoData">
+                                <div id="coords">
+                                    <label for="coords">Merkez Koordinatları:</label>
+                                    
+                                        <input
+                                            type="text"
+                                            name="centerCoords"
+                                            id="centerCoords"
+                                            placeholder="enlem, boylam"
+                                        />
+                                    
+                                </div>
+                                <div id="coords">
+                                    <label for="coords">Merkez Fotoğraf:</label>
+                                    
+                                        <input
+                                            type="file"
+                                            name="centerImage"
+                                            id="centerImage"
+                                        />
+                                    
+                                </div>
+                                <div id="coords">
+                                    <label for="coords">km Başlangıç:</label>
+                                    
+                                        <input
+                                            type="text"
+                                            name="kmStart"
+                                            id="kmStart"
+                                            placeholder="km başlangıç enlem,boylam"
+                                        />
+                                    
+                                </div>
+                                <div id="coords">
+                                    <label for="coords">km Başlangıç Fotoğraf:</label>
+                                    
+                                        <input
+                                            type="file"
+                                            name="kmStartImage"
+                                            id="kmStartImage"
+                                        />
+                                    
+                                </div>
+                                <div id="coords">
+                                    <label for="coords">km Son:</label>
+                                    
+                                        <input
+                                            type="text"
+                                            name="kmEnd"
+                                            id="kmEnd"
+                                            placeholder="km son enlem,boylam"
+                                        />
+                                    
+                                </div>
+                                <div id="coords">
+                                    <label for="coords">km Son Fotoğraf:</label>
+                                    
+                                        <input
+                                            type="file"
+                                            name="kmEndImage"
+                                            id="kmEndImage"
+                                        />
+                                    
+                                </div>
+                                <div id="coords">
+                                    <label for="coords">Kontrollük Binası:</label>
+                                    
+                                        <input
+                                            type="text"
+                                            name="kgmCon"
+                                            id="kgmCon"
+                                            placeholder="Kontrollük enlem,boylam"
+                                        />
+                                    
+                                </div>
+                                <div id="coords">
+                                    <label for="coords">Kontrollük Fotoğraf:</label>
+                                    
+                                        <input
+                                            type="file"
+                                            name="conImage"
+                                            id="conImage"
+                                        />
+                                    
+                                </div>
+                                <div id="coords">
+                                    <label for="coords">Taş Ocağı:</label>
+                                    <input
+                                        type="text"
+                                        name="quarry"
+                                        id="quarry"
+                                        placeholder="Taş Ocağı enlem,boylam"
+                                    />
+                                </div>
+                                <div id="coords">
+                                    <label for="coords">Taş Ocağı Fotoğraf:</label>
+                                    
+                                        <input
+                                            type="file"
+                                            name="quarryImage"
+                                            id="quarryImage"
+                                        />
+                                    
+                                </div>
+                                <div id="coords">
+                                    <label for="coords">Asfalt Plenti:</label>
+                                    <input
+                                        type="text"
+                                        name="plent"
+                                        id="plent"
+                                        placeholder="Asfalt Plenti enlem,boylam"
+                                    />
+                                </div>
+                                <div id="coords">
+                                    <label for="coords">Asfalt Plenti Fotoğraf:</label>
+                                    
+                                        <input
+                                            type="file"
+                                            name="plentImage"
+                                            id="plentImage"
+                                        />
+                                    
+                                </div>
+                                <div id="coords">
+                                    <label for="kmlFile">KML 1 Yükle:</label>
+                                    <input type="file" name="kmlFileOne" id="kmlFile" accept=".kml">
+                                </div>
+                                <div id="coords">
+                                    <label for="kmlFile">KML 2 Yükle:</label>
+                                    <input type="file" name="kmlFileTwo" id="kmlFile" accept=".kml">
+                                </div>
+                                <div id="coords">
+                                    <label for="kmlFile">KML 3 Yükle:</label>
+                                    <input type="file" name="kmlFileThree" id="kmlFile" accept=".kml">
+                                </div>
+                                <div id="coords">
+                                    <label for="kmlFile">KML 4 Yükle:</label>
+                                    <input type="file" name="kmlFileFour" id="kmlFile" accept=".kml">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <fieldset id="variousJobsField">
+                        <legend>Çeşitli İşler</legend>
+                        <div class="variousJobs">
+                            <div>
+                                <label>Trafik İşaretleme İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="traficSignsAmountCon"
+                                        id="traficSignsAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="traficSignsAmountComp"
+                                        id="traficSignsAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label>Oto Korkuluk</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="quardRailAmountCon"
+                                        id="quardRailAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="quardRailAmountComp"
+                                        id="quardRailAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label>Peyzaj İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="landScapeAmountCon"
+                                        id="landScapeAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="landScapeAmountComp"
+                                        id="landScapeAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label>Drenaj İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="drenAmountCon"
+                                        id="drenAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="drenAmountComp"
+                                        id="drenAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label>Elektrik İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="elecAmountCon"
+                                        id="elecAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="elecAmountComp"
+                                        id="elecAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label>İnternet Hattı İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="netAmountCon"
+                                        id="netAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="netAmountComp"
+                                        id="netAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label>Kanalizasyon İşleri</label>
+                                <div id="con-amountCon">
+                                    <label for="con-amountCon"
+                                        >Sözleşmedeki Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="sewerAmountCon"
+                                        id="sewerAmountCon"
+                                        placeholder="Sözleşmedeki miktarı giriniz."
+                                    />
+                                </div>
+                                <div id="con-amountComp">
+                                    <label for="con-amountComp"
+                                        >Gerçekleşen Miktar:</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="sewerAmountComp"
+                                        id="sewerAmountComp"
+                                        placeholder="Gerçekleşen miktarı giriniz."
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div
+                        class="row"
+                        style="text-align: center"
+                    >
+                        <input type="submit" value="Oluştur" />
+                    </div>
+                </form>
+            </div>
+        </main>
+    </body>
+    <script>
+        document.getElementById("create-project-form").addEventListener('submit', function(event) {
+            const geoData = document.getElementById('centerCoords').value;
+            const kmlFile = document.getElementById('kmlFile').value;
+            const kmStart = document.getElementById('kmStart').value;
+            const kmEnd = document.getElementById('kmEnd').value;
+        
+            if (!geoData || !kmlFile || !kmStart || !kmEnd) {
+                event.preventDefault(); // Prevent form submission
+                window.alert('Lütfen Harita Bilgileri Başlığına veri girişi yapınız.');
+            }
+        });
+    </script>
+</html>

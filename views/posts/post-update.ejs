@@ -1,0 +1,118 @@
+<%- include('../includes/head') %>
+    <body>
+        <nav class="navbar">
+            <div class="Logo"><a href="/projects/<%= post.projectId %>">Greenbook</a></div>
+            <ul class="Log">
+                <li><a href="/users/profile"><%=username%></a></li>
+                <li>
+                    <form action="/logout" method="POST">
+                        <button type="submit" class="btn">Çıkış</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+        <main>
+            <div class="update-post-container">
+                <form action="/posts/edit/<%= post.id %>" method="POST" enctype="multipart/form-data">
+                    <div class="row" style="display: flex;align-items: center;flex-wrap: wrap;">
+                        <div class="col-25">
+                            <label for="km">Km:</label>
+                        </div>
+                        <div class="col-75" style="display: flex;height: 48px;">
+                            <input
+                            style="max-width: 160px;height: 32px;"
+                                type="text"
+                                name="kmStart"
+                                id="kmStart"
+                                placeholder="Başlangıç km giriniz."
+                                value="<%= post.kmStart %>"
+                            />
+                            <p style="font-size: xx-large;margin-left: 5px;margin-right: 5px;"><b>-</b></p>
+                            <input
+                            style="max-width: 160px;height: 32px;"
+                                type="text"
+                                name="kmEnd"
+                                id="kmEnd"
+                                placeholder="Bitiş km giriniz."
+                                value="<%= post.kmEnd %>"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="title">Başlık:</label>
+                        </div>
+                        <div class="col-75">
+                            <input
+                                type="text"
+                                name="postTitle"
+                                id="postTitle"
+                                placeholder="Çalışmanın başlığını giriniz."
+                                value="<%= post.title %>"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="post-content">Yapılan İş:</label>
+                        </div>
+                        <div class="col-75">
+                            <textarea
+                                name="postContent"
+                                id="postContent"
+                                placeholder="Yapılan iş hakkında açıklama giriniz..."
+                                style="height: 200px"
+                            ><%= post.content || "" %></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="title">Fotoğraflar:</label>
+                        </div>
+                        <div class="col-75">
+                            <input
+                                            type="file"
+                                            name="updatedPostImages"
+                                            id="updatedPostImages" multiple
+                                        />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                        </div>
+                        <div class="col-75">
+                            <div class="map <%=post.projectId%>" id="updatePostMap">
+                                <div class="ol-control button point">
+                                    <button>
+                                        <i class='fa-solid fa-location-dot'></i>
+                                    </button>
+                                </div>
+                                <div class="ol-control button lineString">
+                                    <button>
+                                        <i class='fa-solid fa-arrows-left-right-to-line'></i>
+                                    </button>
+                                </div>
+                                <div class="ol-control button polygon">
+                                    <button>
+                                        <i class='fa-solid fa-draw-polygon'></i>
+                                    </button>
+                                </div>
+                                <div class="ol-control button quitDraw">
+                                    <button>
+                                        <i class="fa-solid fa-circle-stop"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="display: flex;justify-content: center;">
+                        <input type="hidden" name="updatedGeoData" id="updatedGeoData" value="">
+                        <button class="btn" id="sbmtbtn">Güncelle</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <script src="/libs/v6.0.0-dist/ol.js"></script>
+        <script src="/js/updatePostMap.js"></script>
+    </body>
+</html>

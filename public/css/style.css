@@ -1,0 +1,2465 @@
+:root {
+    --main-color: #eeeeee;
+    --navbar-color: rgb(74, 149, 28);
+    --btn-color: rgb(104, 175, 76);
+    --components-color: #f2f2f2;
+    --features-color: #eeeeee;
+    --main-posts-color: #eeeeee;
+    --coworkers-color: #dbd6d6a9;
+    --profile-color: #f2f2f2;
+    --grahp-color: rgb(252, 220, 42);
+}
+
+/* 
+#3e7c17
+*/
+
+* {
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0%;
+    padding: 0%;
+    caret-color: transparent;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+/* font-family: 'Montserrat', sans-serif; */
+
+main {
+    background-color: var(--main-color);
+}
+
+label {
+    font-weight: 600;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    height: 4rem;
+    background-color: var(--navbar-color);
+    color: azure;
+}
+
+a {
+    color: azure;
+    text-decoration: none;
+}
+
+.Logo,
+.Log {
+    width: 30vw;
+}
+
+.Logo {
+    font-size: xx-large;
+}
+
+.Log {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+nav li {
+    padding: 0.5rem;
+    list-style: none;
+    display: inline;
+}
+
+.Log .btn {
+    text-decoration: none;
+    padding: 0.5rem;
+    border: 1px var(--navbar-color);
+    color: azure;
+    background: var(--navbar-color);
+    cursor: pointer;
+}
+
+.Log > .btn {
+    text-decoration: none;
+    padding: 0.5rem;
+    border: 1px var(--btn-color);
+    color: azure;
+    background: var(--btn-color);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.link .btn {
+    text-decoration: none;
+    padding: 0.5rem;
+    border: 1px var(--btn-color);
+    color: azure;
+    background: var(--btn-color);
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover,
+.btn:active {
+    background-color: azure;
+    color: var(--btn-color);
+}
+
+.project-features {
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 785px) {
+    .navbar {
+        flex-direction: column;
+        height: 10rem;
+    }
+
+    .Logo,
+    .Log {
+        width: 100%;
+        text-align: center;
+    }
+
+    .Log {
+        justify-content: center;
+    }
+
+    nav li {
+        display: block;
+        padding: 0.5rem 0.3rem;
+    }
+}
+
+.project-features {
+    display: flex;
+    flex-direction: row;
+}
+
+.map-frame {
+    flex: 2;
+    margin: 0.5rem 0.5rem 0 0.5rem;
+}
+
+.map {
+    border: 3px solid var(--btn-color);
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    width: 100%;
+    height: 34rem;
+    margin: 0.5rem 0.5rem 0 0.5rem;
+}
+
+.kmStartC {
+    position: absolute;
+    margin-bottom: 10px;
+    left: 7px;
+    top: 65px;
+    z-index: 1000;
+    padding: 10px;
+    cursor: pointer;
+}
+
+@media (max-width: 1180px) {
+    .map-frame .kmStartC {
+        top: 85px;
+    }
+}
+
+.locC {
+    position: absolute;
+    margin-bottom: 10px;
+    left: 35px;
+    top: 65px;
+    z-index: 1000;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.kmlOne {
+    position: absolute;
+    margin-bottom: 10px;
+    left: 60px;
+    top: 65px;
+    z-index: 1000;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.kmlTwo {
+    position: absolute;
+    margin-bottom: 10px;
+    left: 85px;
+    top: 65px;
+    z-index: 1000;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.kmlThree {
+    position: absolute;
+    margin-bottom: 10px;
+    left: 110px;
+    top: 65px;
+    z-index: 1000;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.kmlFour {
+    position: absolute;
+    margin-bottom: 10px;
+    left: 135px;
+    top: 65px;
+    z-index: 1000;
+    padding: 10px;
+    cursor: pointer;
+}
+
+@media (max-width: 1180px) {
+    .map-frame .locC {
+        top: 55px;
+        left: 50px;
+    }
+
+    .kmlOne {
+        position: absolute;
+        margin-bottom: 10px;
+        left: 75px;
+        top: 55px;
+        z-index: 1000;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .kmlTwo {
+        position: absolute;
+        margin-bottom: 10px;
+        left: 100px;
+        top: 55px;
+        z-index: 1000;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .kmlThree {
+        position: absolute;
+        margin-bottom: 10px;
+        left: 125px;
+        top: 55px;
+        z-index: 1000;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .kmlFour {
+        position: absolute;
+        margin-bottom: 10px;
+        left: 150px;
+        top: 55px;
+        z-index: 1000;
+        padding: 10px;
+        cursor: pointer;
+    }
+}
+
+.centerC {
+    position: absolute;
+    top: 90px;
+    margin-bottom: 0.5rem;
+    left: 7px;
+    z-index: 1000;
+    padding: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+@media (max-width: 1180px) {
+    .map-frame .centerC {
+        top: 125px;
+    }
+}
+
+.kgmC {
+    position: absolute;
+    top: 140px;
+    margin-bottom: 0.5rem;
+    left: 7px;
+    z-index: 1000;
+    padding: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+@media (max-width: 1180px) {
+    .map-frame .kgmC {
+        top: 205px;
+    }
+}
+
+.quarryC {
+    position: absolute;
+    top: 165px;
+    margin-bottom: 0.5rem;
+    left: 7px;
+    z-index: 1000;
+    padding: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+@media (max-width: 1180px) {
+    .map-frame .quarryC {
+        top: 245px;
+    }
+}
+
+.plentC {
+    position: absolute;
+    top: 190px;
+    margin-bottom: 0.5rem;
+    left: 7px;
+    z-index: 1000;
+    padding: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+@media (max-width: 1180px) {
+    .map-frame .plentC {
+        top: 285px;
+    }
+}
+
+.kmEndC {
+    position: absolute;
+    top: 115px;
+    left: 7px;
+    z-index: 1000;
+    padding: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+@media (max-width: 1180px) {
+    .map-frame .kmEndC {
+        top: 165px;
+    }
+}
+
+.eraseDraw {
+    position: absolute;
+    top: 250px;
+    margin-bottom: 0.5rem;
+    left: 7px;
+    z-index: 1000;
+    padding: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+@media (max-width: 1180px) {
+    .map-frame .eraseDraw {
+        top: 325px;
+    }
+}
+
+.quitDraw {
+    position: absolute;
+    top: 375px;
+    margin-bottom: 0.5rem;
+    left: 7px;
+    z-index: 1000;
+    padding: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.point {
+    position: absolute;
+    top: 275px;
+    margin-bottom: 0.5rem;
+    left: 7px;
+    z-index: 1000;
+    padding: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.lineString {
+    position: absolute;
+    top: 300px;
+    margin-bottom: 0.5rem;
+    left: 7px;
+    z-index: 1000;
+    padding: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.polygon {
+    position: absolute;
+    top: 325px;
+    margin-bottom: 0.5rem;
+    left: 7px;
+    z-index: 1000;
+    padding: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.posts-coworkers {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+}
+
+@media (max-width: 650px) {
+    .posts-coworkers {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .coworkers-dateSearch {
+        max-width: 350px;
+        margin: auto;
+    }
+}
+
+.top-field-main {
+    width: 100%;
+    margin: auto;
+    margin-bottom: 1rem;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 2.5em;
+}
+
+.bottomField-main {
+    width: 100%;
+    margin: auto;
+    margin-bottom: 1rem;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 2.5em;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-field-main #proInfo {
+    padding-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.top-field-main #proInfo label {
+    flex: 1;
+}
+
+/* ---Posts--- */
+.postsAndLink {
+    flex: 4;
+    position: relative;
+    min-height: 35rem;
+}
+
+@media (max-width: 1024px) {
+    .postsAndLink {
+        min-height: 45rem;
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 820px) {
+    .postsAndLink {
+        min-height: 52rem;
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 425px) {
+    .postsAndLink {
+        min-height: 40rem;
+        margin-top: 2rem;
+    }
+}
+
+.posts {
+    background-color: var(--main-posts-color);
+    max-height: 60vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+#create-post-button {
+    text-align: center;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    min-width: 50px;
+    max-width: 175px;
+}
+
+#detail-post-button {
+    min-width: 100px;
+}
+
+.post-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5vw;
+    margin-bottom: 1.8rem;
+}
+
+.post {
+    /* border: 1px black solid; */
+    width: 300px;
+    min-height: 10rem;
+    background-color: var(--components-color);
+    border-radius: 5px;
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.postBtn {
+    text-decoration: none;
+    border: 1px #04aa6d;
+    color: azure;
+    background: #04aa6d;
+    cursor: pointer;
+    width: 100%;
+}
+
+.postBtn:hover {
+    opacity: 1;
+}
+
+.post-blank {
+    border: 1px transparent;
+    width: 300px;
+    height: 20vh;
+}
+
+.post .evaluation {
+    width: 95%;
+}
+
+.post .evaluation .title {
+    margin-top: 1.5vh;
+}
+
+.post .evaluation .nots {
+    margin-top: 1.5vh;
+}
+
+.create-post {
+    /* border: 1px black solid; */
+    min-height: 5vh;
+    max-width: 10vw;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    text-align: center;
+    background-color: rgb(26, 200, 104);
+    color: azure;
+}
+
+.post-modal {
+    position: fixed;
+    border: 1px #f2f2f2 solid;
+    background-color: var(--components-color);
+    border-radius: 5px;
+    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    left: 15vw;
+    top: 10vh;
+    width: 70vw;
+    display: flex;
+    overflow-y: unset;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 5;
+}
+
+.hidden {
+    display: none;
+}
+
+.post-modal-features {
+    display: flex;
+    flex-direction: column;
+    border: 1px rgb(26, 200, 104);
+    margin: 0.5rem;
+}
+
+.post-modal-features > * {
+    margin: 0.5rem; /* Adjust the unit (rem, em, px) according to your needs */
+}
+
+#postPic {
+    width: 100%;
+    margin-bottom: 0.35rem;
+    opacity: 1;
+    transition: 0.3s;
+}
+
+#postPic:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.post-modal-map {
+    width: 65%;
+    margin: 0.5rem;
+    height: 75vh;
+    border: 1px solid rgb(26, 200, 104);
+}
+
+.post-modal-content {
+    margin: 0.5rem;
+    height: 75vh;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+}
+
+.evaluation {
+    margin: 0.5rem;
+    border: 1px transparent;
+}
+
+.evaluation div:not([class='date']) {
+    margin: 0.5rem 0 0 0;
+}
+
+.post-modal-comments {
+    margin: 0.5rem;
+    border: 1px transparent;
+}
+
+.post-modal-pics {
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.pic-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 10; /* Sit on top */
+    padding-top: 100px;
+    padding-bottom: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+}
+
+#fullPostPic {
+    margin: auto;
+    display: block;
+    width: 80%;
+    height: auto;
+}
+
+@media (max-width: 1250px) {
+    .post-modal {
+        left: 5vw;
+        min-width: 90vw;
+    }
+}
+
+@media (max-width: 1024px) {
+    .post-modal {
+        top: 5vw;
+        left: 5vw;
+        overflow-y: scroll;
+        flex-direction: column;
+    }
+
+    .post-modal-map {
+        width: 95%;
+        height: 20rem;
+        margin: 0.5rem;
+        border: 1px solid rgb(26, 200, 104);
+    }
+
+    .post-modal-content {
+        margin: 0.5rem;
+        height: 35vh;
+        width: 95%;
+    }
+
+    .post-modal-pics {
+        overflow-y: unset;
+    }
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.linkbtn {
+    background-color: var(--btn-color);
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    color: azure;
+    padding: 10px 10px;
+    margin: 0.5rem;
+    border: 1px solid var(--btn-color);
+    cursor: pointer;
+    min-width: 40px;
+    text-align: center;
+    opacity: 0.9;
+}
+
+.linkbtn:hover {
+    opacity: 1;
+}
+
+.deletePostBtn {
+    background-color: red;
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    color: azure;
+    padding: 10px 10px;
+    margin: 0.5rem;
+    border: 1px solid whitesmoke;
+    cursor: pointer;
+    max-width: 24%;
+    min-width: 40px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.deletePostBtn:hover {
+    opacity: 1;
+}
+
+.updatePostBtn {
+    background-color: #f23e02;
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    color: azure;
+    padding: 10px 10px;
+    margin: 0.5rem;
+    border: 1px solid whitesmoke;
+    cursor: pointer;
+    max-width: 24%;
+    min-width: 40px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.updatePostBtn:hover {
+    opacity: 1;
+}
+
+/* ----Profile Page----- */
+
+#profile-projects a {
+    color: black;
+    text-decoration: none;
+}
+
+.profile-con {
+    background-color: var(--profile-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#all-project,
+#joined-projects,
+#created-project {
+    min-width: 50vw;
+}
+
+/* background-color: #04aa6d; */
+
+.profile-con .linkbtn {
+    background-color: var(--btn-color);
+    color: white;
+    margin-bottom: 2rem;
+    padding: 10px 10px;
+    border: 1px solid var(--btn-color);
+    cursor: pointer;
+    text-align: center;
+    opacity: 0.9;
+}
+
+.profile-con .linkbtn:hover {
+    opacity: 1;
+}
+
+#createdProjectsInput,
+#allProjectsİnput,
+#joinedProjectsInput {
+    background-image: url('/images/searchicon.png'); /* Add a search icon to input */
+    background-size: 20px;
+    background-position: 0.5rem; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    width: 100%; /* Full-width */
+    font-size: 1rem; /* Increase font-size */
+    padding-left: 2rem; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+}
+
+#createdProjectsTable,
+#allProjectsTable,
+#joinedProjectsTable {
+    border-collapse: collapse; /* Collapse borders */
+    width: 100%; /* Full-width */
+    border: 1px solid #ddd; /* Add a grey border */
+    font-size: 1rem; /* Increase font-size */
+    background-color: #ffffff;
+}
+
+#createdProjectsTable th,
+#createdProjectsTable td,
+#joinedProjectsTable th,
+#joinedProjectsTable td,
+#allProjectsTable th,
+#allProjectsTable td {
+    vertical-align: top;
+    text-align: left; /* Left-align text */
+    padding: 12px; /* Add padding */
+}
+
+#joinedProjectsTable tr,
+#createdProjectsTable tr,
+#allProjectsTable tr {
+    /* Add a bottom border to all table rows */
+    border-bottom: 1px solid #edebeb;
+}
+
+#joinedProjectsTable .header,
+#createdProjectsTable .header,
+#allProjectsTable .header {
+    /* Add a grey background color to the table header and on hover */
+    background-color: #b0aeae;
+}
+
+#list td:hover,
+#list td a:hover {
+    background-color: #b0aeae;
+    color: #ffffff;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.profile-pic {
+    width: 200px;
+    height: 250px;
+    margin: 2rem;
+    border: 2px solid var(--coworkers-color);
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    -webkit-box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.profile-pic img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+#profile-projects {
+    width: 60vw;
+    margin: auto;
+}
+
+#top-profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50vw;
+    gap: 20px;
+}
+
+.profile-entities {
+    flex: 1;
+}
+
+.profile-entities table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.profile-label {
+    font-weight: bold;
+    padding: 5px;
+    text-align: left;
+    width: 150px; /* Adjust width as necessary */
+}
+
+.profile-value {
+    padding: 5px;
+    text-align: left;
+    width: 150px;
+}
+
+.profile-update-modal {
+    position: fixed;
+    border: 1px #f2f2f2 solid;
+    background-color: var(--components-color);
+    border-radius: 5px;
+    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    left: 35vw;
+    top: 10vh;
+    min-height: 75vh;
+    width: 35vw;
+}
+
+@media (max-width: 1200px) {
+    .profile-update-modal {
+        left: 25vw;
+        top: 10vh;
+        min-height: 75vh;
+        width: 50vw;
+    }
+}
+
+@media (max-width: 835px) {
+    .profile-update-modal {
+        left: 15vw;
+        top: 7vh;
+        min-height: 75vh;
+        width: 70vw;
+    }
+}
+
+@media (max-width: 510px) {
+    .profile-update-modal {
+        left: 5vw;
+        top: 7vh;
+        width: 90vw;
+    }
+}
+
+.updateSignin {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 20px;
+}
+
+@media (max-width: 510px) {
+    .updateSignin {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 700px) {
+    .profile-con {
+        padding: 1rem;
+    }
+
+    .profile-pic {
+        width: 100px;
+        height: 125px;
+        margin: 1rem;
+    }
+
+    #top-profile {
+        width: 90vw;
+    }
+
+    #profile-projects {
+        width: 90%;
+    }
+
+    /* Set the width of the scrollbar */
+    ::-webkit-scrollbar {
+        width: 10px; /* You can adjust this value */
+        height: 10px;
+    }
+
+    /* Set the background of the scrollbar track */
+    ::-webkit-scrollbar-track {
+        background: rgba(0, 128, 0, 0.5); /* Green with 50% transparency */
+    }
+
+    /* Set the color of the scrollbar thumb */
+    ::-webkit-scrollbar-thumb {
+        background: rgba(74, 149, 28); /* Darker green with 70% transparency */
+    }
+
+    /* Optionally style the corners of the scrollbar */
+    ::-webkit-scrollbar-corner {
+        background: rgba(0, 128, 0, 0.5); /* Match the track color */
+    }
+}
+
+/* ------------------------- */
+
+/* ------user messages----- */
+
+.user-message {
+    margin: 1vw auto;
+    /* max-width: 25%; */
+    border: 1px solid rgb(4, 132, 14);
+    background-color: rgb(41, 212, 135);
+    color: rgb(4, 132, 14);
+    border-radius: 3px;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.user-message--error {
+    border: 3px solid red;
+    color: red;
+    background-color: rgb(237, 214, 214);
+}
+
+.inputError {
+    border: 1px solid red;
+}
+
+/* ----Create Account ------*/
+
+.signin {
+    position: absolute;
+    border: 1px #f2f2f2 solid;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    left: 35vw;
+    top: 10vh;
+    height: 85vh;
+    overflow-y: scroll;
+    width: 30vw;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+@media (min-height: 770px) {
+    .signin {
+        height: 62vh;
+    }
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 1024px) {
+    .signin {
+        left: 50%;
+        top: 5vh;
+        transform: translateX(-50%);
+        width: 50vw;
+        height: 90vh;
+        min-width: 300px;
+        padding: 15px;
+    }
+
+    .signin h1 {
+        font-size: 1.5rem;
+    }
+
+    .signin p {
+        font-size: 1rem;
+    }
+
+    .signin-login p {
+        font-size: 1rem;
+    }
+
+    .signin button {
+        font-size: 1rem;
+    }
+}
+
+/* Small screens (phones) */
+@media (max-width: 768px) {
+    .signin {
+        left: 50%;
+        top: 5vh;
+        transform: translateX(-50%);
+        width: 80vw;
+        height: 90vh;
+        min-width: 280px;
+        padding: 10px;
+    }
+
+    .signin h1 {
+        font-size: 1.2rem;
+    }
+
+    .signin p {
+        font-size: 0.9rem;
+    }
+
+    .signin-login p {
+        font-size: 0.9rem;
+    }
+
+    .signin button {
+        font-size: 1rem;
+    }
+
+    .signin input,
+    .signin button {
+        font-size: 1rem;
+    }
+
+    .signin label {
+        font-size: 0.9rem;
+    }
+
+    .signin #profilePic {
+        width: 100%;
+    }
+}
+
+/* Extra Small screens (very small phones) */
+@media (max-width: 480px) {
+    .signin {
+        top: 5vh;
+        width: 90vw;
+        padding: 10px;
+        height: auto;
+        max-height: 90vh;
+    }
+
+    .signin h1 {
+        font-size: 1rem;
+    }
+
+    .signin p {
+        font-size: 0.8rem;
+    }
+
+    .signin-login p {
+        font-size: 0.8rem;
+    }
+
+    .signin input,
+    .signin button {
+        font-size: 0.9rem;
+    }
+
+    .signin label {
+        font-size: 0.8rem;
+    }
+
+    .signin #profilePic {
+        width: 100%;
+    }
+}
+
+.login {
+    position: absolute;
+    border: 1px #f2f2f2 solid;
+    left: 67vw;
+    top: 38vh;
+    width: 30vw;
+    min-width: 350px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.login button {
+    margin-top: 20px;
+}
+
+.signin-login {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#loginbg {
+    background-image: url('/images/login_pic_1.jpeg');
+    background-size: cover; /* Ensure the background covers the entire page */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the background from repeating */
+    margin: 0;
+    height: 100vh; /* Ensure the body takes up the full viewport height */
+    width: 100vw;
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 1024px) {
+    .login {
+        left: 50%;
+        top: 35vh;
+        transform: translateX(-50%);
+        width: 50vw;
+        min-width: 300px;
+    }
+
+    .login h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Small screens (phones) */
+@media (max-width: 768px) {
+    .login {
+        left: 50%;
+        top: 30vh;
+        transform: translateX(-50%);
+        width: 65vw;
+        min-width: 280px;
+        padding: 15px;
+    }
+
+    .login h1 {
+        font-size: 1.2rem;
+    }
+
+    .login input,
+    .login button {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login {
+        left: 50%;
+        top: 25vh;
+        width: 70vw;
+        padding: 10px;
+    }
+
+    .login h1 {
+        font-size: 1rem;
+    }
+
+    .login input,
+    .login button {
+        font-size: 0.9rem;
+    }
+}
+
+#signinbg {
+    background-image: url('/images/signin-zurich.webp');
+    background-size: cover; /* Ensure the background covers the entire page */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the background from repeating */
+    margin: 0;
+    height: 100vh; /* Ensure the body takes up the full viewport height */
+}
+
+/* Full-width input fields */
+input[type='text'],
+input[type='password'] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px 0;
+    display: inline-block;
+    border: none;
+    caret-color: auto;
+}
+
+input[type='text']:focus,
+input[type='password']:focus {
+    background-color: #ddd;
+    outline: none;
+    caret-color: auto;
+}
+
+/* Overwrite default styles of hr */
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+/* Set a style for the submit/register button */
+.registerbtn {
+    background-color: var(--btn-color);
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.registerbtn:hover {
+    opacity: 1;
+}
+
+/* Add a blue text color to links */
+/* a {
+    color: dodgerblue;
+} */
+
+/* Set a grey background color and center the text of the "sign in" section */
+
+/* ------------------------ */
+
+/* ---Create-Post-Form--- */
+
+/* Style inputs, select elements and textareas */
+input[type='text'],
+input[type='password'],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+    caret-color: auto;
+}
+
+/* Style the submit button */
+input[type='submit'] {
+    background-color: var(--btn-color);
+    color: azure;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    caret-color: auto;
+}
+
+.create-post-modal {
+    position: fixed;
+    border: 1px #f2f2f2 solid;
+    background-color: var(--components-color);
+    border-radius: 5px;
+    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    top: 5vh;
+    left: 10vw;
+    min-height: 75vh;
+    width: 80vw;
+    padding: 10px;
+}
+
+.close-create-post {
+    color: azure;
+    padding: 0 2px;
+    background-color: crimson;
+    border: 2px solid azure;
+    border-radius: 5px;
+    float: right;
+}
+
+.close-create-post:hover {
+    color: azure;
+    background-color: var(--btn-color);
+    float: right;
+}
+
+/* Style the container */
+.create-post-container {
+    border: 1px #f2f2f2 solid;
+    border-radius: 5px;
+    background-color: var(--main-color);
+    width: 75%;
+    min-width: 400px;
+    margin: auto;
+    padding: 20px;
+}
+
+#crtPostForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.update-post-container {
+    border: 1px #f2f2f2 solid;
+    border-radius: 5px;
+    background-color: var(--main-color);
+    width: 75%;
+    min-width: 400px;
+    margin: auto;
+    padding: 20px;
+}
+
+#updatePostForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.features-map {
+    display: flex;
+}
+
+.features-row {
+    flex: 1;
+}
+
+.map-row {
+    flex: 1;
+}
+
+/* Floating column for labels: 25% width */
+.col-25 {
+    float: left;
+    width: 12%;
+    margin-top: 6px;
+    padding: 5px;
+}
+
+/* Floating column for inputs: 75% width */
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+    padding: 5px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+#postMap {
+    width: 75%;
+    margin: auto;
+}
+
+#sbmtbtn {
+    background-color: var(--btn-color);
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    color: azure;
+    padding: 10px 10px;
+    margin: 15px;
+    border: 1px solid var(--btn-color);
+    cursor: pointer;
+    min-width: 40px;
+    text-align: center;
+    opacity: 0.9;
+}
+
+#sbmtbtn:hover {
+    opacity: 1;
+}
+
+@media (max-width: 1250px) {
+    #postMap {
+        min-height: 450px;
+    }
+
+    #updatePostMap {
+        min-height: 450px;
+    }
+}
+
+@media (max-width: 1165px) {
+    .create-post-container {
+        width: 85%;
+        padding: 20px;
+    }
+
+    .update-post-container {
+        width: 85%;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 1010px) {
+    .col-75 {
+        /* float: none; */
+        width: 100%;
+    }
+
+    .col-25 {
+        width: 100%;
+    }
+
+    #postMap {
+        width: 100%;
+    }
+
+    #updatePostMap {
+        width: 100%;
+    }
+}
+
+/* ---------------------- */
+
+/* ----Create-Projects ---- */
+
+.create-project-container {
+    background-color: var(--components-color);
+    padding: 20px;
+}
+
+.top-field {
+    width: 75vw;
+    margin: auto;
+    margin-bottom: 1rem;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 2em;
+    padding-right: 2em;
+    border: 3px groove;
+}
+
+.bottomField {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 475px;
+}
+
+.fieldset-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 75vw;
+    margin: auto;
+    gap: 35px;
+}
+
+.fieldset-container fieldset {
+    /* width: 35vw;
+    min-width: 550px; */
+    height: fit-content;
+    margin-bottom: 1rem;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 2em;
+    padding-right: 2em;
+    border: 3px groove;
+}
+
+#variousJobsField {
+    width: 75vw;
+    margin: auto;
+    margin-bottom: 1rem;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 2em;
+    padding-right: 2em;
+    border: 3px groove;
+}
+
+.variousJobs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.variousJobs div label {
+    min-width: 15vw;
+}
+
+.variousJobs div input {
+    min-width: 15vw;
+}
+
+legend {
+    background-color: var(--btn-color);
+    padding: 5px;
+    border-radius: 5px;
+    color: azure;
+    font-weight: 600;
+}
+
+fieldset label {
+    padding-top: 15px;
+}
+
+#con-amountCon {
+    margin-left: 1rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+}
+
+#con-amountCon label {
+    flex: 1;
+    max-width: 20vw;
+}
+
+#con-amountCon input {
+    flex: 1;
+    max-width: 25vw;
+    caret-color: auto;
+}
+
+#con-amountComp {
+    margin-left: 1rem;
+    display: flex;
+    padding-bottom: 0.5rem;
+}
+
+#con-amountComp label {
+    flex: 1;
+    max-width: 20vw;
+}
+
+#con-amountComp input {
+    flex: 1;
+    max-width: 25vw;
+    caret-color: auto;
+}
+
+#coords {
+    margin-left: 1rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#coords label {
+    flex: 1;
+    max-width: 15vw;
+}
+
+#coords input {
+    flex: 1;
+    max-width: 15vw;
+    caret-color: auto;
+}
+
+#proInfoTitle {
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 40px;
+}
+
+#proInfoTitle label {
+    flex: 1;
+    max-width: 15vw;
+}
+
+#proInfoTitle input {
+    flex: 1;
+    max-width: 50vw;
+    caret-color: auto;
+}
+
+#proInfoContractor {
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 40px;
+}
+
+#proInfoContractor label {
+    flex: 1;
+    max-width: 15vw;
+    padding-left: 20px;
+}
+
+#proInfoContractor textarea {
+    flex: 1;
+    max-width: 15vw;
+    caret-color: auto;
+}
+
+#proInfo {
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 40px;
+}
+
+#proInfo label {
+    flex: 1;
+}
+
+#proInfo input {
+    flex: 1;
+    max-width: 15vw;
+    caret-color: auto;
+}
+
+@media (max-width: 1530px) {
+    .bottomField {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 650px;
+    }
+}
+
+@media (max-width: 1265px) {
+    #proInfoTitle {
+        padding-right: 0;
+    }
+
+    .bottomField {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 800px;
+    }
+
+    #proInfo {
+        padding-right: 0;
+    }
+
+    #proInfo input {
+        max-width: 30vw;
+    }
+
+    .fieldset-container fieldset {
+        width: 100%;
+        height: fit-content;
+        margin-bottom: 1rem;
+        padding-top: 0.35em;
+        padding-bottom: 0.625em;
+        padding-left: 2em;
+        padding-right: 2em;
+        border: 3px groove;
+    }
+
+    #con-amountCon {
+        margin: auto;
+        justify-content: space-around;
+    }
+
+    #con-amountCon label {
+        max-width: 30vw;
+    }
+
+    #con-amountComp {
+        margin: auto;
+        justify-content: space-around;
+    }
+
+    #con-amountComp label {
+        max-width: 30vw;
+    }
+
+    #coords {
+        margin-left: 1rem;
+        padding-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    #coords label {
+        max-width: 30vw;
+    }
+
+    #coords input {
+        max-width: 30vw;
+        caret-color: auto;
+    }
+
+    #proInfoContractor {
+        padding: 5px;
+    }
+
+    #proInfoContractor textarea {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 1100px) {
+    .top-field #proInfo {
+        padding: 5px;
+    }
+
+    .bottomField {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 850px;
+    }
+
+    .variousJobs {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .variousJobs #con-amountCon {
+        flex-direction: column;
+    }
+
+    .variousJobs #con-amountComp {
+        flex-direction: column;
+    }
+
+    .variousJobs #con-amountCon label {
+        max-width: 75vw;
+    }
+
+    .variousJobs #con-amountCon input {
+        max-width: 75vw;
+    }
+
+    .variousJobs #con-amountComp label {
+        flex: 1;
+        max-width: 75vw;
+    }
+
+    .variousJobs #con-amountComp input {
+        flex: 1;
+        max-width: 75vw;
+    }
+}
+
+@media (max-width: 720px) {
+    #proInfoTitle {
+        display: flex;
+        flex-direction: column;
+        padding-right: 0;
+    }
+
+    #proInfoTitle label {
+        max-width: 50vw;
+    }
+
+    #proInfoTitle input {
+        max-width: 100%;
+    }
+
+    .bottomField {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 1200px;
+    }
+
+    #proInfo {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    #proInfo input {
+        max-width: 100%;
+    }
+
+    #proInfoContractor {
+        flex-direction: column;
+        padding-right: 0;
+    }
+
+    #proInfoContractor textarea {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 515px) {
+    .bottomField {
+        height: 1250px;
+    }
+
+    #proInfo {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    #proInfo input {
+        max-width: 100%;
+    }
+
+    #proInfoContractor {
+        flex-direction: column;
+        padding-right: 0;
+    }
+
+    #proInfoContractor textarea {
+        max-width: 100%;
+    }
+
+    #coords {
+        margin-left: 1rem;
+        padding-bottom: 0.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #coords label {
+        max-width: 60vw;
+    }
+
+    #coords input {
+        max-width: 60vw;
+        caret-color: auto;
+    }
+}
+
+@media (max-width: 425px) {
+    .top-field {
+        width: 90vw;
+    }
+}
+
+/* ------------------------ */
+
+/* -----Features-------- */
+.features-con {
+    flex: 1;
+}
+.features {
+    border-radius: 5px;
+    margin: 0.5rem 0.5rem 1rem 0;
+    max-height: 34rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    background-color: var(--features-color);
+}
+
+.first-row {
+    width: 97%;
+}
+
+.second-row {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.second-row > .work {
+    width: 97%;
+}
+
+.features label {
+    padding: 0.5rem;
+}
+
+.work {
+    background-color: var(--components-color);
+    border-radius: 5px;
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.3);
+    margin: 0.5rem 0.5rem 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.inner-work {
+    margin: 0 0 0.2rem 0;
+    padding: 0.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-work-text {
+    flex: 3;
+}
+
+.inner-work-graph {
+    flex: 2;
+    width: 180px;
+    height: 160px;
+}
+
+.sm,
+.gm {
+    margin: 0.2rem 0.2rem 0.2rem 0.8rem;
+    padding: 0.2rem;
+}
+/* --------------------- */
+
+/* ---Co-workers--- */
+
+.coworkers-dateSearch {
+    flex: 1;
+    min-width: 300px;
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.coworkers {
+    background-color: var(--coworkers-color);
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    max-height: 50vh;
+    height: fit-content;
+    width: 280px;
+    padding: 0.5rem;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+.dateSearch {
+    background-color: var(--coworkers-color);
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    max-height: 60vh;
+    width: 280px;
+    margin: 1.5rem 0rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.dateSearch .search {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px 0;
+    height: 2rem;
+}
+
+.dateSearch .search input {
+    height: 1.8rem;
+    text-align: center;
+}
+
+.dateSearch .search button {
+    height: 1.8rem;
+    width: 1.8rem;
+    background-color: var(--btn-color);
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 5px;
+    color: azure;
+    cursor: pointer;
+}
+
+.dateSearch .post {
+    width: 95%;
+    margin: 0.5rem auto;
+}
+
+.dateSearch .dateSearchResults {
+    overflow-y: scroll;
+}
+
+.worker {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* border: 1px black solid; */
+    margin: 0.5rem;
+    padding: 0.2rem;
+    max-height: 7vw;
+    min-height: 40px;
+    min-width: 170px;
+    background-color: var(--components-color);
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.worker-name {
+    width: 65%;
+}
+
+/* ----------------- */
+
+/* ------Comments-------- */
+
+.signin-login a {
+    color: #03658c;
+    text-decoration: none;
+}
+
+/* -------------- */
+
+.blank {
+    flex: 1;
+    padding: 0.5rem;
+}
+
+footer {
+    min-height: 15vh;
+    background-color: var(--navbar-color);
+    color: azure;
+}
+
+.copy-right {
+    position: relative;
+    top: 10vh;
+    text-align: center;
+}
+
+.ol-control.search-control {
+    position: absolute;
+    top: 10px;
+    left: 55px;
+    background-color: transparent;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    height: 32px;
+}
+
+.search-control input {
+    height: 27px;
+    margin: 0;
+}
+
+#daySearchButton {
+    padding: 3px;
+}
+
+.popup {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    z-index: 1000;
+}
+
+.popup-content img {
+    max-width: 100%;
+    height: auto;
+    min-width: 250px;
+    max-width: 350px;
+    display: block;
+    margin: 10px 0;
+}
+
+.pagination {
+    position: absolute;
+    bottom: 2rem;
+    display: flex;
+    gap: 5px;
+}
+
+.pagination div {
+    text-decoration: none;
+    padding: 0.5rem;
+    border: 1px var(--btn-color);
+    color: azure;
+    background: var(--btn-color);
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.pagination div:hover,
+.pagination .active {
+    background-color: azure;
+    color: var(--btn-color);
+}
+
+@media (max-width: 480px) {
+    .btn,
+    .linkbtn,
+    .create-post,
+    .deletePostBtn,
+    .updatePostBtn {
+        padding: 0.3rem;
+        font-size: 0.8rem;
+    }
+
+    #fullPostPic {
+        width: 95%;
+    }
+}
+
+@media (max-width: 1250px) {
+    .project-features {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .map-frame {
+        flex: 1;
+    }
+
+    .map {
+        height: 25rem;
+        width: 100%;
+        margin: 0;
+    }
+
+    .features {
+        flex: 1;
+        max-height: 20rem;
+    }
+
+    .second-row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .second-row > .work {
+        width: 30rem;
+    }
+}
+
+#proInfo div {
+    padding-right: 10px;
+}
+
+/* Full-screen overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensures it appears above other content */
+}
+
+/* Spinner animation */
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    border: 6px solid #f3f3f3; /* Light grey */
+    border-top: 6px solid var(--navbar-color); /* Blue color */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Spinner animation keyframes */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.request {
+    height: 5rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px var(--coworkers-color);
+}
+
+.joinRequests {
+    position: absolute;
+    top: 10vh;
+    left: 65%;
+    width: 31rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(232, 240, 206);
+    border: 2px solid var(--profile-color);
+    border-radius: 15px;
+}
+
+#confirmBtn {
+    background-color: var(--btn-color);
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    border: 2px solid #4caf50;
+    color: white;
+    border: 1px solid whitesmoke;
+    padding: 10px 10px;
+    min-width: 40px;
+    cursor: pointer;
+    text-align: center;
+    opacity: 0.9;
+}
+
+#denyBtn {
+    background-color: red;
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    color: azure;
+    padding: 10px 10px;
+    margin: 0.5rem;
+    border: 1px solid whitesmoke;
+    cursor: pointer;
+    max-width: 24%;
+    min-width: 40px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+#confirmBtn:hover,
+#denyBtn:hover {
+    opacity: 1;
+}
+
+.worker-avatar {
+    width: 5vw;
+    height: 5vw;
+    max-width: 50px;
+    max-height: 50px;
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: 50%;
+    margin: 0.5rem;
+    overflow: hidden;
+    border: 2px solid #4caf50;
+    -webkit-box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.worker-kick {
+    background-color: red;
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    color: azure;
+    margin-right: 0.5rem;
+    padding-top: 0.1rem;
+    border: 1px solid whitesmoke;
+    cursor: pointer;
+    width: 1.5rem;
+    height: 1.5rem;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.worker-kick:hover {
+    opacity: 1;
+}
+
+/* Default: coworkers visible */
+.coworkers-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.features-con {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#coworkers {
+    display: block;
+}
+
+#coworkers label {
+    display: block;
+}
+
+/* For screens narrower than 576px, hide by default */
+
+/* Style the toggle button */
+.toggle-coworkers {
+    display: none; /* Hidden by default on larger screens */
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+    width: 175px;
+    text-decoration: none;
+    padding: 0.5rem;
+    border: 1px var(--btn-color);
+    color: azure;
+    background: var(--btn-color);
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.toggle-coworkers:hover {
+    background-color: azure;
+    color: var(--btn-color);
+}
+
+.toggle-features {
+    display: none; /* Hidden by default on larger screens */
+    text-align: center;
+    width: 175px;
+    text-decoration: none;
+    padding: 0.5rem;
+    border: 1px var(--btn-color);
+    color: azure;
+    background: var(--btn-color);
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.toggle-features:hover {
+    background-color: azure;
+    color: var(--btn-color);
+}
+
+@media (max-width: 576px) {
+    #coworkers {
+        display: none;
+    }
+
+    .features {
+        display: none;
+    }
+
+    #coworkers label {
+        display: none;
+    }
+
+    .toggle-coworkers {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .toggle-features {
+        display: block;
+        margin: 10px 0;
+    }
+}

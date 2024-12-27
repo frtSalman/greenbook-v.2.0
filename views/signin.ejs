@@ -1,0 +1,76 @@
+<%- include('./includes/head') %>
+    <body>
+        <main>
+            <section id="signinbg">
+                <form action="/register" method="POST" enctype="multipart/form-data">
+                    <div class="signin">
+                        <h1>Kayıt Formu</h1>
+                        <p style="margin:5px 0 10px 0">Lütfen hesap oluşturmak için formu doldurun.</p>
+                        <% if (errorMessage.length > 0) {%>
+                        <ul>
+                            <% for( let i = 0; i < errorMessage.length; i++ ) { %>
+                            <li>
+                                <div class="user-message user-message--error">
+                                    <%=errorMessage[i].msg%>
+                                </div>
+                            </li>
+                            <% } %>
+                        </ul>
+                        <% } %>
+                        <label for="name"><b>İsim-Soyisim</b></label>
+                        <input
+                        class="<%=validationErrors.find(e=>e.path==="name")?'inputError':''%>"
+                        type="text" placeholder="Ad Soyad Giriniz." name="name"
+                        value="<%=oldInput.name%>" id="name" required />
+    
+                        <label for="name"><b>Görev Ünvanı</b></label>
+                        <input
+                        class="<%=validationErrors.find(e=>e.path==="name")?'inputError':''%>"
+                        type="text" placeholder="Görev Ünvanı giriniz."
+                        name="workingTitle" value="<%=oldInput.workingTitle%>"
+                        id="workingTitle" required />
+    
+                        <label for="email"><b>Email</b></label>
+                        <input type="text" placeholder="Enter Email"
+                        class="<%=validationErrors.find(e=>e.path==="email")?'inputError':''%>"
+                        name="email" id="email" value="<%=oldInput.email%>" required
+                        />
+    
+                        <label for="psw"><b>Password</b></label>
+                        <input type="password" placeholder="Enter Password"
+                        class="<%=validationErrors.find(e=>e.path==="password")?'inputError':''%>"
+                        name="password" id="password" value="<%=oldInput.password%>"
+                        required />
+    
+                        <label for="confirmpassword"><b>Repeat Password</b></label>
+                        <input type="password" placeholder="Repeat Password"
+                        class="<%=validationErrors.find(e=>e.path==="confirmPassword")?'inputError':''%>"
+                        name="confirmPassword" id="confirmPassword" value="<%=
+                        oldInput.confirmpassword%>" required />
+
+                        <div style="display: flex;justify-content: space-between;">
+                            <label>Profil Fotoğrafı:</label>                                    
+                        <input
+                            type="file"
+                            name="profilePic"
+                            id="profilePic"
+                            style="width: 250px;"
+                        />
+                        </div>
+
+                        <button type="submit" class="registerbtn">Kayıt ol</button>
+                        <div class="signin-login">
+                            <p>
+                                Zaten bir hesabın var mı?<a
+                                    href="/"
+                                >
+                                    Giriş</a
+                                >.
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </body>
+</html>
