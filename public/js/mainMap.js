@@ -490,7 +490,7 @@ async function init() {
                 const popupImageSrc = feature.get('popupImageSrc');
                 popupContent.innerHTML = `
                 <strong>${name}</strong><br>
-                <img src="/${popupImageSrc}" alt="${name}">
+                <img src="/${popupImageSrc}" alt="${name}" onclick="makeBig(event)">
             `;
             } else {
                 return;
