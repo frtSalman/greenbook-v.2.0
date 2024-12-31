@@ -1,4 +1,16 @@
-'use strict';
+import Map from 'ol/Map.js';
+import View from 'ol/View.js';
+import { Tile as TileLayer, Vector as VectorLayer, Group } from 'ol/layer.js';
+import OSM from 'ol/source/OSM.js';
+import VectorSource from 'ol/source/Vector.js';
+import KML from 'ol/format/KML.js';
+import { fromLonLat, transform } from 'ol/proj';
+import Control from 'ol/control/Control';
+import { defaults, FullScreen, ScaleLine, Attribution } from 'ol/control';
+import { Feature, Overlay } from 'ol';
+import { Point, LineString, Polygon } from 'ol/geom';
+import { Style, Icon, Stroke, Fill, Circle as CircleStyle } from 'ol/style';
+import Draw from 'ol/interaction/Draw.js';
 
 window.onload = init;
 
@@ -43,19 +55,19 @@ async function init() {
     }
     const response = await fetch(`/projects/${projectId}/projectCoords`);
     const coords = await response.json();
-    const map = new ol.Map({
-        view: new ol.View({
+    const map = new Map({
+        view: new View({
             center: [+coords.cCoords[1], +coords.cCoords[0]],
             zoom: zoom,
             projection: 'EPSG:4326',
         }),
         target: 'postMap',
-        controls: ol.control.defaults().extend([new ol.control.FullScreen()]),
+        controls: defaults().extend([new FullScreen()]),
     });
 
     // Openstreet Base Map
-    const openlayersStandartMap = new ol.layer.Tile({
-        source: new ol.source.OSM(),
+    const openlayersStandartMap = new TileLayer({
+        source: new OSM(),
         //extent: [26, 36, 45, 42], // bu sınırların dışı asla renderlenmez.
         visible: true,
         title: 'OSMStandart',
@@ -76,11 +88,11 @@ async function init() {
             this.element.className = `ol-control button ${this.className}`;
             this.element.appendChild(button);
 
-            this.kmlVector = new ol.layer.Vector({
+            this.kmlVector = new VectorLayer({
                 visible: true,
-                source: new ol.source.Vector({
+                source: new VectorSource({
                     url: this.newKmlFilePath,
-                    format: new ol.format.KML(),
+                    format: new KML(),
                 }),
             });
 
@@ -126,68 +138,22 @@ async function init() {
         kmlVectors.push(kmlElFour.kmlVector);
     }
 
-    const styleFunction = function (feature) {
-        const geometryType = feature.getGeometry().getType();
-        let style;
-
-        if (geometryType === 'Point') {
-            style = new ol.style.Style({
-                image: new ol.style.Circle({
-                    radius: 7,
-                    fill: new ol.style.Fill({ color: 'red' }),
-                    stroke: new ol.style.Stroke({
-                        color: 'white',
-                        width: 2,
-                    }),
-                }),
-            });
-        } else if (geometryType === 'LineString') {
-            style = new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: 'blue',
-                    width: 7,
-                }),
-            });
-        } else if (geometryType === 'Polygon') {
-            style = new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: 'green',
-                    lineDash: [4],
-                    width: 3,
-                }),
-                fill: new ol.style.Fill({
-                    color: 'rgba(0, 255, 0, 0.1)',
-                }),
-            });
-        }
-
-        return style;
-    };
-
-    const drawSource = new ol.source.Vector({ wrapX: false });
-
-    const drawLayer = new ol.layer.Vector({
-        source: drawSource,
-        style: styleFunction,
-    });
-
     /* adding icons on main map ----- start */
 
     // Create icon features and styles with reprojected coordinates
     const createIconFeature = (coords, name, src, popupImageSrc) => {
-        const iconCoords = ol.proj.transform(
+        const iconCoords = transform(
             [+coords[1], +coords[0]],
             'EPSG:3857',
             'EPSG:4326'
         );
-        console.log(ol.proj.fromLonLat(iconCoords));
-        const iconFeature = new ol.Feature({
-            geometry: new ol.geom.Point(ol.proj.fromLonLat(iconCoords)),
+        const iconFeature = new Feature({
+            geometry: new Point(fromLonLat(iconCoords)),
             name: name,
             popupImageSrc: popupImageSrc,
         });
-        const iconStyle = new ol.style.Style({
-            image: new ol.style.Icon({
+        const iconStyle = new Style({
+            image: new Icon({
                 anchor: [0.5, 1],
                 anchorXUnits: 'fraction',
                 anchorYUnits: 'fraction',
@@ -229,7 +195,7 @@ async function init() {
         coords.plentPicLink
     );
 
-    const iconsVectorSource = new ol.source.Vector({
+    const iconsVectorSource = new VectorSource({
         features: [
             kmStartIconFeature,
             kmEndIconFeature,
@@ -239,13 +205,58 @@ async function init() {
         ],
     });
 
-    const iconsVectorLayer = new ol.layer.Vector({
+    const iconsVectorLayer = new VectorLayer({
         source: iconsVectorSource,
     });
 
     /* adding icons on main maps ----- end */
 
-    const LG = new ol.layer.Group({
+    const styleFunction = function (feature) {
+        const geometryType = feature.getGeometry().getType();
+        let style;
+
+        if (geometryType === 'Point') {
+            style = new Style({
+                image: new CircleStyle({
+                    radius: 7,
+                    fill: new Fill({ color: 'red' }),
+                    stroke: new Stroke({
+                        color: 'white',
+                        width: 2,
+                    }),
+                }),
+            });
+        } else if (geometryType === 'LineString') {
+            style = new Style({
+                stroke: new Stroke({
+                    color: 'blue',
+                    width: 7,
+                }),
+            });
+        } else if (geometryType === 'Polygon') {
+            style = new Style({
+                stroke: new Stroke({
+                    color: 'green',
+                    lineDash: [4],
+                    width: 3,
+                }),
+                fill: new Fill({
+                    color: 'rgba(0, 255, 0, 0.1)',
+                }),
+            });
+        }
+
+        return style;
+    };
+
+    const drawSource = new VectorSource({ wrapX: false });
+
+    const drawLayer = new VectorLayer({
+        source: drawSource,
+        style: styleFunction,
+    });
+
+    const LG = new Group({
         layers: [
             openlayersStandartMap,
             ...kmlVectors,
@@ -279,14 +290,14 @@ async function init() {
             const userLocationCoords = [+this.coords[1], +this.coords[0]];
 
             // Create a new marker feature
-            const locationMarker = new ol.Feature({
-                geometry: new ol.geom.Point(userLocationCoords),
+            const locationMarker = new Feature({
+                geometry: new Point(userLocationCoords),
                 name: 'Your Location',
             });
 
             // Define the style for the marker (customize the icon as you wish)
-            const locationMarkerStyle = new ol.style.Style({
-                image: new ol.style.Icon({
+            const locationMarkerStyle = new Style({
+                image: new Icon({
                     anchor: [0.5, 1],
                     anchorXUnits: 'fraction',
                     anchorYUnits: 'fraction',
@@ -298,11 +309,11 @@ async function init() {
             locationMarker.setStyle(locationMarkerStyle);
 
             // Create a new vector source and layer to hold the marker
-            const locationVectorSource = new ol.source.Vector({
+            const locationVectorSource = new VectorSource({
                 features: [locationMarker],
             });
 
-            this.locationLayer = new ol.layer.Vector({
+            this.locationLayer = new VectorLayer({
                 source: locationVectorSource,
             });
 
@@ -359,16 +370,16 @@ async function init() {
     const polyEl = document.querySelector('.polygon');
     const quitDrawEl = document.querySelector('.quitDraw');
 
-    const pointCont = new ol.control.Control({
+    const pointCont = new Control({
         element: pointEl,
     });
-    const lineCont = new ol.control.Control({
+    const lineCont = new Control({
         element: lineEl,
     });
-    const polyCont = new ol.control.Control({
+    const polyCont = new Control({
         element: polyEl,
     });
-    const quitDrawCont = new ol.control.Control({
+    const quitDrawCont = new Control({
         element: quitDrawEl,
     });
 
@@ -376,7 +387,7 @@ async function init() {
         if (draw !== null) {
             map.removeInteraction(draw);
         }
-        draw = new ol.interaction.Draw({
+        draw = new Draw({
             type: 'Point',
             source: drawSource,
         });
@@ -388,7 +399,7 @@ async function init() {
         if (draw !== null) {
             map.removeInteraction(draw);
         }
-        draw = new ol.interaction.Draw({
+        draw = new Draw({
             type: 'LineString',
             source: drawSource,
         });
@@ -400,7 +411,7 @@ async function init() {
         if (draw !== null) {
             map.removeInteraction(draw);
         }
-        draw = new ol.interaction.Draw({
+        draw = new Draw({
             type: 'Polygon',
             source: drawSource,
         });
@@ -416,53 +427,53 @@ async function init() {
 
     /* stop initiate draw elements */
 
-    const locationCont = new ol.control.Control({
+    const locationCont = new Control({
         element: locEl.element,
     });
 
-    const kmStartZoomCont = new ol.control.Control({
+    const kmStartZoomCont = new Control({
         element: kmSEl.element,
     });
-    const CenterZoomCont = new ol.control.Control({
+    const CenterZoomCont = new Control({
         element: kmCEl.element,
     });
-    const kmEndZoomCont = new ol.control.Control({
+    const kmEndZoomCont = new Control({
         element: kmEEl.element,
     });
-    const kgmZoomCont = new ol.control.Control({
+    const kgmZoomCont = new Control({
         element: kgmCEl.element,
     });
-    const quarryZoomCont = new ol.control.Control({
+    const quarryZoomCont = new Control({
         element: qEl.element,
     });
 
-    const plentZoomCont = new ol.control.Control({
+    const plentZoomCont = new Control({
         element: pEl.element,
     });
 
     if (kmlElOne) {
-        const kmlElOneCont = new ol.control.Control({
+        const kmlElOneCont = new Control({
             element: kmlElOne.element,
         });
         map.addControl(kmlElOneCont);
     }
 
     if (kmlElTwo) {
-        const kmlElTwoCont = new ol.control.Control({
+        const kmlElTwoCont = new Control({
             element: kmlElTwo.element,
         });
         map.addControl(kmlElTwoCont);
     }
 
     if (kmlElThree) {
-        const kmlElThreeCont = new ol.control.Control({
+        const kmlElThreeCont = new Control({
             element: kmlElThree.element,
         });
         map.addControl(kmlElThreeCont);
     }
 
     if (kmlElFour) {
-        const kmlElFourCont = new ol.control.Control({
+        const kmlElFourCont = new Control({
             element: kmlElFour.element,
         });
         map.addControl(kmlElFourCont);

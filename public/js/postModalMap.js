@@ -1,3 +1,15 @@
+/* import Map from 'ol/Map.js';
+import View from 'ol/View.js';
+import { Tile as TileLayer, Vector as VectorLayer, Group } from 'ol/layer.js';
+import OSM from 'ol/source/OSM.js';
+import VectorSource from 'ol/source/Vector.js';
+import KML from 'ol/format/KML.js';
+import { fromLonLat} from 'ol/proj';
+import Control from 'ol/control/Control';
+import { Feature} from 'ol';
+import { Point, LineString, Polygon } from 'ol/geom';
+import { Style, Icon, Stroke, Fill, Circle as CircleStyle } from 'ol/style'; */
+
 'use strict';
 
 (async function () {

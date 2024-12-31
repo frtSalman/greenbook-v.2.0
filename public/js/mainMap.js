@@ -1,70 +1,97 @@
+import Map from 'ol/Map.js';
+import View from 'ol/View.js';
+import { Tile as TileLayer, Vector as VectorLayer, Group } from 'ol/layer.js';
+import { OSM, Vector as VectorSource } from 'ol/source.js';
+import KML from 'ol/format/KML.js';
+import { fromLonLat, toLonLat } from 'ol/proj';
+import Control from 'ol/control/Control';
+import { defaults, FullScreen, ScaleLine, Attribution } from 'ol/control';
+import { Feature, Overlay } from 'ol';
+import { Point, LineString, Polygon } from 'ol/geom';
+import { Style, Icon, Stroke, Fill, Circle as CircleStyle } from 'ol/style';
+import { getArea, getLength } from 'ol/sphere.js';
+import { unByKey } from 'ol/Observable.js';
+import Draw from 'ol/interaction/Draw.js';
+
 window.onload = init;
 
+let popupContainer = document.createElement('div');
+popupContainer.className = 'popup';
+
+let currentLat;
+let currentLong;
+
+if (navigator.geolocation) {
+    // If Geolocation API is supported
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            currentLat = position.coords.latitude;
+            currentLong = position.coords.longitude;
+            console.log(`Latitude: ${currentLat}, Longitude: ${currentLong}`);
+
+            // You can use these coordinates for map functions, etc.
+        },
+        error => {
+            console.error(`Error: ${error.message}`);
+        },
+        {
+            enableHighAccuracy: true, // Get a more accurate reading
+            timeout: 5000, // Time out after 5 seconds
+            maximumAge: 0, // Prevent using a cached position
+        }
+    );
+} else {
+    console.log('Geolocation is not supported by this browser.');
+}
+
+let map;
+let mVector; // ölçüm elemanlarının vector layeri silinmesi kolay olsun diye global yapıldı.
+/**
+ * The measure tooltip element.
+ * @type {HTMLElement}
+ */
+let measureTooltipElement;
+
+/**
+ * Overlay to show the measurement.
+ * @type {Overlay}
+ */
+let measureTooltip;
+
+let mToolTip;
+
 async function init() {
-    let currentLat;
-    let currentLong;
-    if (navigator.geolocation) {
-        // If Geolocation API is supported
-        navigator.geolocation.getCurrentPosition(
-            position => {
-                currentLat = position.coords.latitude;
-                currentLong = position.coords.longitude;
-                console.log(
-                    `Latitude: ${currentLat}, Longitude: ${currentLong}`
-                );
-
-                // You can use these coordinates for map functions, etc.
-            },
-            error => {
-                console.error(`Error: ${error.message}`);
-            },
-            {
-                enableHighAccuracy: true, // Get a more accurate reading
-                timeout: 5000, // Time out after 5 seconds
-                maximumAge: 0, // Prevent using a cached position
-            }
-        );
-    } else {
-        console.log('Geolocation is not supported by this browser.');
-    }
-
-    const projectId = document.querySelector('.map').classList[1];
+    console.log('deneme main map');
+    const mapDiv = document.querySelector('.map');
+    const projectId = mapDiv.classList[1];
     const response = await fetch(`/projects/${projectId}/projectCoords`);
     const coords = await response.json();
-    console.log(coords);
-    const map = new ol.Map({
-        view: new ol.View({
-            center: ol.proj.fromLonLat([
-                +coords.cCoords[1],
-                +coords.cCoords[0],
-            ]),
+    map = new Map({
+        view: new View({
+            center: fromLonLat([+coords.cCoords[1], +coords.cCoords[0]]),
             zoom: 12,
             projection: 'EPSG:3857',
         }),
         target: 'map',
-        controls: ol.control
-            .defaults()
-            .extend([
-                new ol.control.FullScreen(),
-                new ol.control.ScaleLine(),
-                new ol.control.Attribution(),
-            ]),
+        controls: defaults().extend([
+            new FullScreen(),
+            new ScaleLine(),
+            new Attribution(),
+        ]),
     });
 
-    const openlayersStandartMap = new ol.layer.Tile({
-        source: new ol.source.OSM(),
+    const openlayersStandartMap = new TileLayer({
+        source: new OSM(),
         visible: true,
         title: 'OSMStandart',
     });
 
     class kmlMapElement {
         visibilty = true;
-        kmlVector;
         constructor(filePath, btnText, className) {
-            this.filePath = filePath;
+            this.newKmlFilePath = filePath.slice(6);
             this.btnText = btnText;
             this.className = className;
-            this.newKmlFilePath = this.filePath.slice(6);
             const button = document.createElement('button');
             button.insertAdjacentHTML('afterbegin', `<p>${this.btnText}</p>`);
 
@@ -72,11 +99,11 @@ async function init() {
             this.element.className = `ol-control button ${this.className}`;
             this.element.appendChild(button);
 
-            this.kmlVector = new ol.layer.Vector({
+            this.kmlVector = new VectorLayer({
                 visible: true,
-                source: new ol.source.Vector({
+                source: new VectorSource({
                     url: this.newKmlFilePath,
-                    format: new ol.format.KML(),
+                    format: new KML(),
                 }),
             });
 
@@ -122,7 +149,7 @@ async function init() {
         kmlVectors.push(kmlElFour.kmlVector);
     }
 
-    const LG = new ol.layer.Group({
+    const LG = new Group({
         layers: [openlayersStandartMap, ...kmlVectors],
     });
 
@@ -150,20 +177,20 @@ async function init() {
         // Inside the `locEl.handleZoom` function:
         handleZoom() {
             // Create a temporary marker feature at the user's current location
-            const userLocationCoords = ol.proj.fromLonLat([
+            const userLocationCoords = fromLonLat([
                 +this.coords[1],
                 +this.coords[0],
             ]);
 
             // Create a new marker feature
-            const locationMarker = new ol.Feature({
-                geometry: new ol.geom.Point(userLocationCoords),
+            const locationMarker = new Feature({
+                geometry: new Point(userLocationCoords),
                 name: 'Your Location',
             });
 
             // Define the style for the marker (customize the icon as you wish)
-            const locationMarkerStyle = new ol.style.Style({
-                image: new ol.style.Icon({
+            const locationMarkerStyle = new Style({
+                image: new Icon({
                     anchor: [0.5, 1],
                     anchorXUnits: 'fraction',
                     anchorYUnits: 'fraction',
@@ -175,11 +202,11 @@ async function init() {
             locationMarker.setStyle(locationMarkerStyle);
 
             // Create a new vector source and layer to hold the marker
-            const locationVectorSource = new ol.source.Vector({
+            const locationVectorSource = new VectorSource({
                 features: [locationMarker],
             });
 
-            this.locationLayer = new ol.layer.Vector({
+            this.locationLayer = new VectorLayer({
                 source: locationVectorSource,
             });
 
@@ -219,64 +246,66 @@ async function init() {
 
     const pEl = new mapElement('fa fa-industry', coords.plent, 'plentC');
 
+    console.log(coords.cCoords);
+
     const locEl = new mapElement(
         'fa fa-location-crosshairs',
-        [currentLat, currentLong],
+        [currentLat || coords.cCoords[0], currentLong || coords.cCoords[1]],
         'locC'
     );
 
-    const locationCont = new ol.control.Control({
+    const locationCont = new Control({
         element: locEl.element,
     });
 
-    const kmStartZoomCont = new ol.control.Control({
+    const kmStartZoomCont = new Control({
         element: kmSEl.element,
     });
-    const CenterZoomCont = new ol.control.Control({
+    const CenterZoomCont = new Control({
         element: kmCEl.element,
     });
-    const kmEndZoomCont = new ol.control.Control({
+    const kmEndZoomCont = new Control({
         element: kmEEl.element,
     });
-    const kgmZoomCont = new ol.control.Control({
+    const kgmZoomCont = new Control({
         element: kgmCEl.element,
     });
-    const quarryZoomCont = new ol.control.Control({
+    const quarryZoomCont = new Control({
         element: qEl.element,
     });
-    const plentZoomCont = new ol.control.Control({
+    const plentZoomCont = new Control({
         element: pEl.element,
     });
 
     const searchControl = document.querySelector('.search-control');
 
-    const searchControlElement = new ol.control.Control({
+    const searchControlElement = new Control({
         element: searchControl,
     });
 
     if (kmlElOne) {
-        const kmlElOneCont = new ol.control.Control({
+        const kmlElOneCont = new Control({
             element: kmlElOne.element,
         });
         map.addControl(kmlElOneCont);
     }
 
     if (kmlElTwo) {
-        const kmlElTwoCont = new ol.control.Control({
+        const kmlElTwoCont = new Control({
             element: kmlElTwo.element,
         });
         map.addControl(kmlElTwoCont);
     }
 
     if (kmlElThree) {
-        const kmlElThreeCont = new ol.control.Control({
+        const kmlElThreeCont = new Control({
             element: kmlElThree.element,
         });
         map.addControl(kmlElThreeCont);
     }
 
     if (kmlElFour) {
-        const kmlElFourCont = new ol.control.Control({
+        const kmlElFourCont = new Control({
             element: kmlElFour.element,
         });
         map.addControl(kmlElFourCont);
@@ -296,12 +325,10 @@ async function init() {
     /* adding overlays for icons popups */
 
     // Create the overlay for the popup
-    const popupContainer = document.createElement('div');
-    popupContainer.className = 'popup';
     const popupContent = document.createElement('div');
     popupContent.className = 'popup-content';
     popupContainer.appendChild(popupContent);
-    const overlay = new ol.Overlay({
+    const overlay = new Overlay({
         element: popupContainer,
         autoPan: true,
         autoPanAnimation: {
@@ -314,15 +341,15 @@ async function init() {
     // for km Start
     const kmStartCoords = [+coords.kmSCoords[1], +coords.kmSCoords[0]];
 
-    const kmStartIconFeature = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat(kmStartCoords)),
+    const kmStartIconFeature = new Feature({
+        geometry: new Point(fromLonLat(kmStartCoords)),
         name: 'Kilometre Başı',
         popupImageSrc: coords.kmStartPicLink,
         type: 'photo',
     });
 
-    const kmStartIconStyle = new ol.style.Style({
-        image: new ol.style.Icon({
+    const kmStartIconStyle = new Style({
+        image: new Icon({
             anchor: [0.5, 1],
             anchorXUnits: 'fraction',
             anchorYUnits: 'fraction',
@@ -334,15 +361,15 @@ async function init() {
 
     // for km End
     const kmEndCoords = [+coords.kmECoords[1], +coords.kmECoords[0]];
-    const kmEndIconFeature = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat(kmEndCoords)),
+    const kmEndIconFeature = new Feature({
+        geometry: new Point(fromLonLat(kmEndCoords)),
         name: 'Kilometre Sonu',
         popupImageSrc: coords.kmEndPicLink,
         type: 'photo',
     });
 
-    const kmEndIconStyle = new ol.style.Style({
-        image: new ol.style.Icon({
+    const kmEndIconStyle = new Style({
+        image: new Icon({
             anchor: [0.5, 1],
             anchorXUnits: 'fraction',
             anchorYUnits: 'fraction',
@@ -353,15 +380,15 @@ async function init() {
     kmEndIconFeature.setStyle(kmEndIconStyle);
     // for kgm Con
     const kmConCoords = [+coords.kgmCoords[1], +coords.kgmCoords[0]];
-    const kmConIconFeature = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat(kmConCoords)),
+    const kmConIconFeature = new Feature({
+        geometry: new Point(fromLonLat(kmConCoords)),
         name: 'Kontrollük',
         popupImageSrc: coords.kgmConPicLink,
         type: 'photo',
     });
 
-    const kmConIconStyle = new ol.style.Style({
-        image: new ol.style.Icon({
+    const kmConIconStyle = new Style({
+        image: new Icon({
             anchor: [0.5, 1],
             anchorXUnits: 'fraction',
             anchorYUnits: 'fraction',
@@ -370,17 +397,18 @@ async function init() {
     });
 
     kmConIconFeature.setStyle(kmConIconStyle);
+
     // for quarry
     const kmQCoords = [+coords.quarry[1], +coords.quarry[0]];
-    const kmQIconFeature = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat(kmQCoords)),
+    const kmQIconFeature = new Feature({
+        geometry: new Point(fromLonLat(kmQCoords)),
         name: 'Taş Ocağı',
         popupImageSrc: coords.quarryPicLink,
         type: 'photo',
     });
 
-    const kmQIconStyle = new ol.style.Style({
-        image: new ol.style.Icon({
+    const kmQIconStyle = new Style({
+        image: new Icon({
             anchor: [0.5, 1],
             anchorXUnits: 'fraction',
             anchorYUnits: 'fraction',
@@ -393,15 +421,15 @@ async function init() {
     // for plent
 
     const kmPCoords = [+coords.plent[1], +coords.plent[0]];
-    const kmPIconFeature = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat(kmPCoords)),
+    const kmPIconFeature = new Feature({
+        geometry: new Point(fromLonLat(kmPCoords)),
         name: 'Asfalt Plenti',
         popupImageSrc: coords.plentPicLink,
         type: 'photo',
     });
 
-    const kmPIconStyle = new ol.style.Style({
-        image: new ol.style.Icon({
+    const kmPIconStyle = new Style({
+        image: new Icon({
             anchor: [0.5, 1],
             anchorXUnits: 'fraction',
             anchorYUnits: 'fraction',
@@ -411,7 +439,7 @@ async function init() {
 
     kmPIconFeature.setStyle(kmPIconStyle);
 
-    const ıconsVectorSource = new ol.source.Vector({
+    const ıconsVectorSource = new VectorSource({
         features: [
             kmStartIconFeature,
             kmEndIconFeature,
@@ -421,7 +449,7 @@ async function init() {
         ],
     });
 
-    const ıconsVectorLayer = new ol.layer.Vector({
+    const ıconsVectorLayer = new VectorLayer({
         source: ıconsVectorSource,
     });
 
@@ -436,6 +464,8 @@ async function init() {
         map.forEachFeatureAtPixel(event.pixel, function (feature) {
             const coordinates = feature.getGeometry().getCoordinates();
             const name = feature.get('name');
+
+            console.log(feature.values_.geoId);
 
             if (feature.values_.type === 'geom') {
                 popupContent.innerHTML = `
@@ -537,28 +567,28 @@ async function init() {
             const geo_id = item.id;
             const randomColor = getRandomColor();
 
-            const stylePol = new ol.style.Style({
-                stroke: new ol.style.Stroke({
+            const stylePol = new Style({
+                stroke: new Stroke({
                     color: randomColor,
                     lineDash: [4],
                     width: 4,
                 }),
-                fill: new ol.style.Fill({
+                fill: new Fill({
                     color: convertRgbToRgba(randomColor, 0.5),
                 }),
             });
 
-            const styleNorm = new ol.style.Style({
-                stroke: new ol.style.Stroke({
+            const styleNorm = new Style({
+                stroke: new Stroke({
                     color: randomColor,
                     width: 3,
                 }),
-                fill: new ol.style.Fill({
+                fill: new Fill({
                     color: randomColor,
                 }),
-                image: new ol.style.Circle({
+                image: new CircleStyle({
                     radius: 5,
-                    fill: new ol.style.Fill({
+                    fill: new Fill({
                         color: randomColor,
                     }),
                 }),
@@ -567,23 +597,21 @@ async function init() {
             geo.forEach(item => {
                 let geometry;
                 if (item.type === 'Point') {
-                    geometry = new ol.geom.Point(
-                        ol.proj.fromLonLat(item.coordinates)
-                    );
+                    geometry = new Point(fromLonLat(item.coordinates));
                 } else if (item.type === 'LineString') {
                     const coords = item.coordinates.map(coord =>
-                        ol.proj.fromLonLat(coord)
+                        fromLonLat(coord)
                     );
-                    geometry = new ol.geom.LineString(coords);
+                    geometry = new LineString(coords);
                 } else if (item.type === 'Polygon') {
                     const coords = item.coordinates.map(ring =>
-                        ring.map(coord => ol.proj.fromLonLat(coord))
+                        ring.map(coord => fromLonLat(coord))
                     );
-                    geometry = new ol.geom.Polygon(coords);
+                    geometry = new Polygon(coords);
                 }
 
                 if (geometry) {
-                    const feature = new ol.Feature(geometry);
+                    const feature = new Feature(geometry);
                     feature.setProperties({
                         name: 'İş Tarihi',
                         date: item.geomDate,
@@ -622,11 +650,11 @@ async function init() {
             const postGeoDatas = geoDatas.datas;
             const features = createFeatures(postGeoDatas);
 
-            const vS = new ol.source.Vector({
+            const vS = new VectorSource({
                 features: features,
             });
 
-            vL = new ol.layer.Vector({
+            vL = new VectorLayer({
                 source: vS,
             });
 
@@ -649,7 +677,7 @@ async function init() {
         });
 
     const eraseDrawEl = document.querySelector('.eraseDraw');
-    const eraseDrawCont = new ol.control.Control({
+    const eraseDrawCont = new Control({
         element: eraseDrawEl,
     });
 
@@ -659,6 +687,7 @@ async function init() {
         });
         vectorLayers = [];
     });
+
     map.addControl(eraseDrawCont);
 
     map.on('click', function (event) {
@@ -666,7 +695,7 @@ async function init() {
         const coordinate = event.coordinate;
 
         // Convert the coordinate to geographic (longitude, latitude)
-        const lonLat = ol.proj.toLonLat(coordinate);
+        const lonLat = toLonLat(coordinate);
 
         // Log the coordinates
         console.log('Geographic coordinate (Lat, Lon):', [
@@ -674,4 +703,173 @@ async function init() {
             lonLat[0],
         ]);
     });
+
+    /* İnitilazing measurements */
+
+    const mSource = new VectorSource();
+
+    mVector = new VectorLayer({
+        source: mSource,
+        style: {
+            'fill-color': 'rgba(255, 255, 255, 0.8)',
+            'stroke-color': '#ffcc33',
+            'stroke-width': 4,
+            'circle-radius': 15,
+            'circle-fill-color': '#ffcc33',
+        },
+    });
+
+    let sketch;
+
+    map.addLayer(mVector);
+
+    const typeSelect = document.getElementById('type');
+
+    let draw; // global so we can remove it later
+
+    /**
+     * Format length output.
+     * @param {LineString} line The line.
+     * @return {string} The formatted length.
+     */
+    const formatLength = function (line) {
+        const length = getLength(line);
+        let output;
+        if (length > 100) {
+            output = Math.round((length / 1000) * 100) / 100 + ' ' + 'km';
+        } else {
+            output = Math.round(length * 100) / 100 + ' ' + 'm';
+        }
+        return output;
+    };
+
+    /**
+     * Format area output.
+     * @param {Polygon} polygon The polygon.
+     * @return {string} Formatted area.
+     */
+    const formatArea = function (polygon) {
+        const area = getArea(polygon);
+        let output;
+        if (area > 10000) {
+            output =
+                Math.round((area / 1000000) * 100) / 100 +
+                ' ' +
+                'km<sup>2</sup>';
+        } else {
+            output = Math.round(area * 100) / 100 + ' ' + 'm<sup>2</sup>';
+        }
+        return output;
+    };
+
+    const mStyle = new Style({
+        fill: new Fill({
+            color: 'rgba(255, 255, 255, 0.2)',
+        }),
+        stroke: new Stroke({
+            color: 'rgba(0, 0, 0, 0.5)',
+            lineDash: [10, 10],
+            width: 2,
+        }),
+        image: new CircleStyle({
+            radius: 5,
+            stroke: new Stroke({
+                color: 'rgba(0, 0, 0, 0.7)',
+            }),
+            fill: new Fill({
+                color: 'rgba(255, 255, 255, 0.2)',
+            }),
+        }),
+    });
+
+    function addInteraction() {
+        const type = typeSelect.value == 'area' ? 'Polygon' : 'LineString';
+        draw = new Draw({
+            source: mSource,
+            type: type, // Polygon or LineString
+            style: function (feature) {
+                const geometryType = feature.getGeometry().getType();
+                if (geometryType === type || geometryType === 'Point') {
+                    return mStyle;
+                }
+            },
+        });
+
+        map.addInteraction(draw);
+
+        createMeasureTooltip();
+
+        let listener;
+        draw.on('drawstart', function (evt) {
+            // set sketch
+            sketch = evt.feature;
+
+            /** @type {import("../src/ol/coordinate.js").Coordinate|undefined} */
+            let tooltipCoord = evt.coordinate;
+
+            listener = sketch.getGeometry().on('change', function (evt) {
+                const geom = evt.target;
+                let output;
+                if (geom instanceof Polygon) {
+                    output = formatArea(geom);
+                    tooltipCoord = geom.getInteriorPoint().getCoordinates(); // dinamik alanın yazılı olduğu tooltipi koyacağı koordinat
+                } else if (geom instanceof LineString) {
+                    output = formatLength(geom);
+                    tooltipCoord = geom.getLastCoordinate(); // dinamik uzunluğun yazılı olduğu tooltipi koyacağı koordinat
+                }
+                measureTooltipElement.innerHTML = output;
+                measureTooltip.setPosition(tooltipCoord); // measuretooltip harita üzerinde ölçümü gösteren Overlay
+            });
+        });
+
+        draw.on('drawend', function () {
+            measureTooltipElement.className =
+                'ol-tooltip ol-tooltip-static mtoolTip';
+            measureTooltip.setOffset([0, -7]);
+            // unset sketch
+            sketch = null;
+            // unset tooltip so that a new one can be created
+            measureTooltipElement = null;
+            createMeasureTooltip();
+            unByKey(listener);
+        });
+    }
+
+    function createMeasureTooltip() {
+        if (measureTooltipElement) {
+            measureTooltipElement.remove();
+        }
+        measureTooltipElement = document.createElement('div');
+        measureTooltipElement.className = 'ol-tooltip ol-tooltip-measure';
+        measureTooltip = new Overlay({
+            element: measureTooltipElement,
+            offset: [0, -15],
+            positioning: 'bottom-center',
+            stopEvent: false,
+            insertFirst: false,
+        });
+        map.addOverlay(measureTooltip);
+    }
+
+    const mEl = document.querySelector('.m');
+    const mSelect = document.querySelector('.m-select');
+
+    mEl.addEventListener('click', () => {
+        mSelect.classList.toggle('closed');
+
+        if (draw !== null) {
+            map.removeInteraction(draw);
+        }
+
+        typeSelect.onclick = function () {
+            map.removeInteraction(draw);
+            addInteraction();
+        };
+    });
+
+    const mCont = new Control({
+        element: mEl,
+    });
+
+    map.addControl(mCont);
 }

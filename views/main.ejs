@@ -28,6 +28,19 @@
                             <i class="fa-solid fa-eraser"></i>
                         </button>
                     </div>
+                    <div class="ol-control button m">
+                        <button>
+                            <b>M</b>
+                        </button>
+                    </div>
+                    <div class="ol-control m-select closed">
+                      <form>
+                        <select id="type">
+                          <option value="length">Uzunluk</option>
+                          <option value="area">Alan</option>
+                        </select>
+                      </form>
+                    </div>
                 </div>
             </div>
             <div class="features-con">
@@ -711,8 +724,7 @@
         }
 
     </script>
-    <script src="/js/pie.js"></script>
-    <script src="/libs/v6.0.0-dist/ol.js"></script>
-    <script src="/js/mainMap.js"></script>
+    <script type="module" src="/dist/pie.bundle.js"></script>
+    <script type="module" src="/dist/mainMap.bundle.js"></script>
 </body>
 </html>
